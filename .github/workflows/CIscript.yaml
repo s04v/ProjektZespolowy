@@ -13,5 +13,5 @@ jobs:
       - name: Run Super-Linter
         uses: github/super-linter@v4
         env:
-          DEFAULT_BRANCH: feature_ciScriptBack  
+          DEFAULT_BRANCH: backend-prod  
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
