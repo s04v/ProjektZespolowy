@@ -16,7 +16,7 @@ namespace Proj.Controllers
         [HttpGet]
         public string Get()
         {
-            return "Hello";
+            return "Hi";
         }
 
         // GET api/<HelloController>/5
