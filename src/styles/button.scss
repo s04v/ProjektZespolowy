@@ -1,0 +1,30 @@
+@import 'colors.scss';
+
+
+.button
+{
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  padding: 10px 20px;
+  cursor: pointer;
+  background: $clr-blue-prim;
+  border: 1px solid $clr-white;
+  border-radius: 50px;
+  color: $clr-white;
+  transition: all 0.5s;
+
+  &:hover{
+    background: $clr-blue-sec;
+    transition: all 0.5s;
+    transition: 0.5s;
+  }
+
+  &:active {
+    background-color: $clr-white;
+    color: $clr-blue-sec;
+    transition: 0.5s;
+  }
+
+}
