@@ -1,6 +1,5 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Our Project can be checked here:
+  https://pz-findjob.herokuapp.com/
 
 ## Available Scripts
 
