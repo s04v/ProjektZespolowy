@@ -1,13 +1,9 @@
 
 
-const Button = (props) => {
+const Button = ({text='Button', fontsize='1em'}) => {
   return (
-    <button className="button"> {props.text} </button>
+    <button className="button" style={{fontSize: fontsize }}> {text} </button>
   )
-}
-
-Button.defaultProps = {
-  text:"Button",
 }
 
 export default Button

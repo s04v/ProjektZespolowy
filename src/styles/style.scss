@@ -1,5 +1,7 @@
 @import 'colors.scss';
-@import 'button.scss';
-@import 'header.scss';
+@import 'components/button.scss';
+@import 'components/header.scss';
 @import 'reset.scss';
-@import 'switch.scss';
+@import 'components/switch.scss';
+@import 'app.scss';
+@import 'pages/mainPage.scss';
