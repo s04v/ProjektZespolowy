@@ -2,13 +2,16 @@ import logo from '../resources/logo.svg'
 import Button from './Button';
 import Switch from './Switch';
 
+
 const Header = () => {
   return (
-    <header className="Header">
-        <img src={logo} alt="findjob." className="logo" />
+    <header className="header">
+        <img src={logo} height='38px' alt="findjob." className="logo" />
         <Switch />
-        <Button text="Register"/>
-        <Button text="Sign in"/>
+        <div className='buttons'>
+          <Button text="Register"/>
+          <Button text="Sign in"/>
+        </div>
     </header>
   );
 }

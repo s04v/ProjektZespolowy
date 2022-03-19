@@ -1,10 +1,11 @@
-import Header from './components/Header';
-import './styles/style.scss'
+import './styles/style.scss';
+import MainPage from './pages/MainPage';
+
 
 function App() {
   return (
-    <div className='container'>
-      <Header />
+    <div>
+      <MainPage />
     </div>
   );
 }

@@ -1,0 +1,48 @@
+@import '../colors.scss';
+
+
+.switch {
+  position: relative;
+
+  width: 20%;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+
+  background-color: $clr-blue-prim;
+  color: $clr-white;
+
+  border-radius: 50px;
+  border: 1px solid $clr-blue-sec;
+  cursor: pointer;
+
+  .option {
+    width: 50%;
+    background-color: transparent;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .movable {
+    position: absolute;
+
+    width: 50%;
+    height: calc(100% + 2px);
+    top: -1px;
+    left: 0;
+    z-index: 0;
+
+    background-color: $clr-blue-sec;
+
+    border-radius: 50px 0 0 50px;
+
+    transition: all 0.1s ease-in;
+  }
+
+  &:hover > .movable {
+    left: 50%;
+
+    border-radius: 0 50px 50px 0;
+  }
+}

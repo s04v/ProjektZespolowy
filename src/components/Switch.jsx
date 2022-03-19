@@ -1,16 +1,17 @@
 
+
 const Switch = (props) => {
-    return(
+  return (
     <div className="switch">
-        <div className="movable"></div>
-        <div className={"option" + (!props.on ? " checked" : "") }>Employee</div>
-        <div className={"option" + (props.on ? " checked" : "") }>Employer</div>
+      <div className="movable"></div>
+      <div className={"option" + (!props.on ? " checked" : "")}>Employee</div>
+      <div className={"option" + (props.on ? " checked" : "")}>Employer</div>
     </div>
-    )
+  )
 }
 
 Switch.defaultProps = {
-    on: false
+  on: false
 }
 
 export default Switch;
