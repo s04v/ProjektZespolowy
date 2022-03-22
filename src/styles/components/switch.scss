@@ -3,7 +3,7 @@
 
 .switch {
   position: relative;
-
+  user-select: none;
   width: 20%;
   height: 30px;
 
@@ -36,13 +36,32 @@
     background-color: $clr-blue-sec;
 
     border-radius: 50px 0 0 50px;
-
+    border: 3px solid $clr-blue-sec;
     transition: all 0.1s ease-in;
   }
 
-  &:hover > .movable {
-    left: 50%;
+  //&:hover > .movable {
+  //  left: 50%;
+  //
+  //  border-radius: 0 50px 50px 0;
+  //}
 
+  .movableright {
+    position: absolute;
+
+    width: 50%;
+    height: calc(100% + 2px);
+    top: -1px;
+    z-index: 0;
+    background-color: $clr-blue-sec;
     border-radius: 0 50px 50px 0;
+    transition: all 0.1s ease-in;
+    border: 1px solid $clr-blue-sec;
+    left: 50%;
   }
+
+  //&:hover > .movableright {
+  //  left: 0;
+  //  border-radius: 50px 0 0 50px;
+  //}
 }

@@ -2,17 +2,25 @@ import Header from '.././components/Header';
 import Button from '.././components/Button'
 import Photo from '../resources/job-interview.png'
 import Footer from "../components/Footer";
+import {useState} from "react";
+
 
 const MainPage = () => {
+    const [tab, setTab] = useState(0);
+
+    const onSwitch = (whichOne) => {
+        setTab(whichOne);
+    }
+
   return (
     <>
-      <Header />
+      <Header onSwitch={onSwitch}/>
       <main className='container'>
         <section className='first-section'>
           <img src="https://thispersondoesnotexist.com/image" alt="A human being" />
           <div>
             <h1>findjob works for you.</h1>
-            <Button fontsize='24px' text='Create CV' />
+              { !tab ? <Button fontsize='24px' text='Create CV' /> : <input placeholder='Search' /> }
           </div>
         </section>
           <section className='second-section'>

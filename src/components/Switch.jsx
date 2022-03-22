@@ -1,11 +1,19 @@
+import {useState} from "react";
 
 
 const Switch = (props) => {
+    const [active, setActive] = useState(0);
+
+    const onClick = (whichOne) => {
+        props.onSwitch(whichOne);
+        setActive(whichOne);
+    }
+
   return (
-    <div className="switch">
-      <div className="movable"></div>
-      <div className={"option" + (!props.on ? " checked" : "")}>Employee</div>
-      <div className={"option" + (props.on ? " checked" : "")}>Employer</div>
+    <div className="switch" onClick={() => onClick(!active)}>
+      <div className={"movable" + (active ? "right" : "")}></div>
+      <div className="option">Employee</div>
+      <div className="option">Employer</div>
     </div>
   )
 }
