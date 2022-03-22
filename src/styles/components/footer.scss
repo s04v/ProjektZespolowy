@@ -1,0 +1,50 @@
+@import '../colors.scss';
+@import '../fonts.scss';
+
+
+.footer {
+  background-color: $clr-dark-sec;
+  height: 213px;
+  width: 100%;
+  position: absolute;
+  right: 0;
+  display: flex;
+  box-shadow: 0px -10px 20px rgba(50, 50, 50, 0.35);
+
+  div {
+    margin-top: 40px;
+    margin-left: 103px;
+    margin-right: 105px;
+
+    h1 {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-size: 18px;
+      color: $clr-white;
+      margin-bottom: 8px;
+    }
+
+    li {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      color: $clr-white;
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 8px;
+
+      &:after {
+        content: '';
+        height: .4em;
+        width: .4em;
+        background: $clr-blue-prim;
+        display: block;
+        position: absolute;
+        transform: rotate(45deg);
+        top: .25em;
+        left: 0;
+      }
+    }
+  }
+}
