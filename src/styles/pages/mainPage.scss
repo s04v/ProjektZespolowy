@@ -30,3 +30,35 @@
     align-items: center;
   }
 }
+
+.second-section {
+  margin-top: 317px;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 223px;
+
+  div {
+    width: 500px;
+
+    h1 {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 36px;
+      color: $clr-white;
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 200;
+      font-size: 18px;
+      color: $clr-white;
+    }
+  }
+
+  img {
+    width: 448px;
+  }
+}
