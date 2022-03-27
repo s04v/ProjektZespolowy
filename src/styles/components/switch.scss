@@ -4,9 +4,10 @@
 .switch {
   position: relative;
   user-select: none;
-  width: 20%;
   height: 30px;
+  margin: auto;
 
+  width: 200px;
   display: flex;
   align-items: center;
 
@@ -40,12 +41,6 @@
     transition: all 0.1s ease-in;
   }
 
-  //&:hover > .movable {
-  //  left: 50%;
-  //
-  //  border-radius: 0 50px 50px 0;
-  //}
-
   .movableright {
     position: absolute;
 
@@ -60,8 +55,4 @@
     left: 50%;
   }
 
-  //&:hover > .movableright {
-  //  left: 0;
-  //  border-radius: 50px 0 0 50px;
-  //}
 }
