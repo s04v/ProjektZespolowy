@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\FindJobWebApi",
+    "\\FindJobWebApi\\Controllers"
   ],
-  "SelectedNode": "\\C:\\Users\\T450\\Desktop\\ProjektZespolowy\\Proj",
+  "SelectedNode": "\\FindJobWebApi",
   "PreviewInSolutionExplorer": false
 }
