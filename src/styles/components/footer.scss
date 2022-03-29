@@ -5,10 +5,9 @@
 .footer {
   background-color: $clr-dark-sec;
   padding-bottom: 50px;
-  width: 100%;
-  position: absolute;
   right: 0;
   display: flex;
+  justify-content: center;
   box-shadow: 0px -10px 20px rgba(50, 50, 50, 0.35);
 
   div {
