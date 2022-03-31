@@ -1,4 +1,5 @@
 import {useState} from "react";
+import style from '../styles/components/switch.module.scss'
 
 
 const Switch = (props) => {
@@ -9,11 +10,12 @@ const Switch = (props) => {
         setActive(whichOne);
     }
 
+  const right = active ? style.movableright : style.movable;
   return (
-    <div className="switch" onClick={() => onClick(!active)}>
-      <div className={"movable" + (active ? "right" : "")}></div>
-      <div className="option">Employee</div>
-      <div className="option">Employer</div>
+    <div className={style.switch} onClick={() => onClick(!active)}>
+      <div className={right}></div>
+      <div className={style.option}>Employee</div>
+      <div className={style.option}>Employer</div>
     </div>
   )
 }

@@ -1,22 +1,7 @@
 @import '../fonts.scss';
 @import '../colors.scss';
 
-.background {
-  height: 100vh;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  z-index: -1;
-}
-
-.first-section
-{
-  min-height: 50vh;
-  background-color: $clr-blue-prim;
-
-  .container {
+.first-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -48,24 +33,21 @@
 
     input {
       width: 90%;
-      padding: 15px 18px;
+      padding: 8px 18px;
       font-style: normal;
       font-size: 18px;
       border-radius: 20px;
       border: 1px solid green;
+      margin: 7.5px 0;
     }
     input:focus {
       outline: none !important;
     }
-  }
 
 }
 
-.second-section{
-  min-height: 50vh;
-  background-color: $clr-blue-sec;
+.second-section {
 
-  .container {
     display: flex;
     justify-content: space-between;
     padding-top: 100px;
@@ -96,7 +78,6 @@
       max-width: 448px; 
     }
 
-  }
 }
 
 
@@ -107,11 +88,11 @@
 }
 
 @media (max-width: 992px) {
- .container {
+ .first-section {
    flex-direction: column;
    max-width: 750px;
  }
- .second-section .container {
+ .second-section {
    flex-direction: column-reverse;
    div {
      padding-top: 1em;
@@ -132,8 +113,7 @@
 }
 
 @media (max-width: 481px) {
-  img {
-    max-width: none;
+  img:not(#logo) {
     width: 100%;
   }
 }

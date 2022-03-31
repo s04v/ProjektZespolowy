@@ -1,7 +1,9 @@
+import style from '../styles/components/footer.module.scss'
+
 const Footer = () => {
     return (
-        <div className="footer">
-            <div className="footer-employee">
+        <div className={style.footer}>
+            <div className={style.footer_employee}>
                 <h1>Employee</h1>
                 <ul>
                     <li>Help</li>
@@ -9,7 +11,7 @@ const Footer = () => {
                     <li>Job Centers</li>
                 </ul>
             </div>
-            <div className="footer-employer">
+            <div className={style.footer_employer}>
                 <h1>Employer</h1>
                 <ul>
                     <li>Search Resume</li>
@@ -17,7 +19,7 @@ const Footer = () => {
                     <li>Help for companies</li>
                 </ul>
             </div>
-            <div className="footer-other">
+            <div className={style.footer_other}>
                 <h1>Other menu</h1>
                 <ul>
                     <li>Terms and Conditions</li>

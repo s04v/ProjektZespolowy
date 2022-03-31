@@ -1,0 +1,53 @@
+@import '../colors.scss';
+
+
+.background {
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  z-index: -1;
+
+  .seperator {
+    background-color: $clr-blue-sec;
+
+    svg {
+      width: 100%;
+      height: 100px;
+
+      stroke: transparent;
+      stroke-width: 0px;
+
+      filter: drop-shadow(0px 30px 10px rgba(0, 0, 0, 0.25));
+
+      path {
+        fill: $clr-blue-prim;
+      }
+    }
+  }
+
+  .first_section {
+    min-height: 73%;
+    background-color: $clr-blue-prim;
+
+    @media (max-width: 992px) {
+      min-height: 90%;
+    }
+
+    @media (max-width: 744px) {
+      min-height: 100%;
+    }
+
+    @media (max-width: 481px) {
+      min-height: 110%;
+    }
+  }
+
+  .second_section {
+    min-height: 17%;
+    background-color: $clr-blue-sec;
+  }
+
+}

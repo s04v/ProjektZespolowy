@@ -18,7 +18,7 @@ const SignInPage = () => {
     return(
         <>
             <Header onSwitch={onSwitch}  />
-            <Background>
+                <div className="container">
                 <div className='form-section'>
                     <h1>Employee login</h1>
                     <div>
@@ -31,7 +31,8 @@ const SignInPage = () => {
                     </div>
                     <Button onClick={onSend}>Send</Button>
                 </div>
-            </Background>
+                </div>
+            <Background />
             <Footer />
         </>
     )
