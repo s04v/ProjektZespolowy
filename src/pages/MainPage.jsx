@@ -1,10 +1,11 @@
+import Alert from '@mui/material/Alert';
+
 import Header from '.././components/Header';
 import Button from '.././components/Button'
 import Photo from '../resources/job-interview.png'
 import Footer from "../components/Footer";
 import Separator from '../components/Separator';
 import { useState } from "react";
-
 
 const MainPage = () => {
   const [tab, setTab] = useState(0);

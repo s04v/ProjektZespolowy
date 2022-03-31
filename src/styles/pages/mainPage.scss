@@ -1,9 +1,19 @@
 @import '../fonts.scss';
 @import '../colors.scss';
 
+.background {
+  height: 100vh;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  z-index: -1;
+}
 
 .first-section
 {
+  min-height: 50vh;
   background-color: $clr-blue-prim;
 
   .container {
@@ -51,7 +61,8 @@
 
 }
 
-.second-section {
+.second-section{
+  min-height: 50vh;
   background-color: $clr-blue-sec;
 
   .container {
