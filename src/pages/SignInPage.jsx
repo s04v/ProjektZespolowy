@@ -1,11 +1,15 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Background from "../components/Background";
-import Button from "../components/Button";
-import {useState} from "react";
+import { useState } from "react";
+import SignForm from "../components/SignForm";
 
 const SignInPage = () => {
     const [tab, setTab] = useState(0);
+    const fields = [
+        { id: '1', title: 'Email', type: 'text' },
+        { id: '2', title: 'Password', type: 'password' },
+    ]
 
     const onSwitch = (whichOne) => {
         setTab(whichOne);
@@ -15,23 +19,21 @@ const SignInPage = () => {
         alert(tab);
     }
 
-    return(
+    const setTitle = (tab) => {
+        const type = (tab ? 'Employer' : 'Employee');
+        return type + ' login';
+    }
+
+    return (
         <>
-            <Header onSwitch={onSwitch}  />
-                <div className="container">
-                <div className='form-section'>
-                    <h1>Employee login</h1>
-                    <div>
-                        <p>Email</p>
-                        <input type='text'/>
-                    </div>
-                    <div>
-                        <p>Password</p>
-                        <input type='password'/>
-                    </div>
-                    <Button onClick={onSend}>Send</Button>
-                </div>
-                </div>
+            <Header onSwitch={onSwitch} />
+            <div className="container">
+                <SignForm
+                    title={setTitle(tab)}
+                    fields={fields}
+                    onSend={onSend}
+                    buttonTitle='Sign in' />
+            </div>
             <Background />
             <Footer />
         </>

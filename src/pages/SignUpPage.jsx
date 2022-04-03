@@ -1,44 +1,56 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Background from "../components/Background";
-import Button from "../components/Button";
+import SignForm from "../components/SignForm";
 import { useState } from "react";
 
 const SignUpPage = () => {
+    const sameFields = [
+        { id: '3', title: 'Email', type: 'text' },
+        { id: '4', title: 'Password', type: 'password' },
+        { id: '5', title: 'Repeat password', type: 'password' },
+    ];
+
+    const fieldsEmployee = [
+        { id: '1', title: 'First Name', type: 'text' },
+        { id: '2', title: 'Last Name', type: 'text' },
+    ].concat(sameFields);
+
+    const fieldsEmployer = [
+        { id: '1', title: 'Employer Name', type: 'text' },
+        { id: '2', title: 'Country', type: 'text' },
+    ].concat(sameFields);
+
     const [tab, setTab] = useState(0);
+    const [fields, setFields] = useState(fieldsEmployee);
+
 
     const onSwitch = (whichOne) => {
         setTab(whichOne);
+        setFields(whichFields(whichOne));
     }
 
     const onSend = () => {
         alert(tab);
     }
 
+    const setTitle = (tab) => {
+        const type = (tab ? 'Employer' : 'Employee') ;
+        return type + ' register';
+    }
+
+    const whichFields = (tab) => {
+        return (tab? fieldsEmployer : fieldsEmployee);
+    }
     return (
         <>
             <Header onSwitch={onSwitch} />
             <div className="container">
-                <div className='form-section'>
-                    <h1>Employee register</h1>
-                    <div>
-                        <p>First Name</p>
-                        <input type='text' />
-                    </div>
-                    <div>
-                        <p>Last Name</p>
-                        <input type='text' />
-                    </div>
-                    <div>
-                        <p>Email</p>
-                        <input type='text' />
-                    </div>
-                    <div>
-                        <p>Password</p>
-                        <input type='password' />
-                    </div>
-                    <Button onClick={onSend}>Send</Button>
-                </div>
+                <SignForm 
+                    title={setTitle(tab)} 
+                    fields={fields} 
+                    onSend={onSend}
+                    buttonTitle='Register' />
             </div>
             <Background />
             <Footer />
