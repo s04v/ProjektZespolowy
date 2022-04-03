@@ -7,15 +7,16 @@ import SignForm from "../components/SignForm";
 const SignInPage = () => {
     const [tab, setTab] = useState(0);
     const fields = [
-        { id: '1', title: 'Email', type: 'text' },
-        { id: '2', title: 'Password', type: 'password' },
+        { id: '1', name: 'email', title: 'Email', type: 'text' },
+        { id: '2', name: 'password', title: 'Password', type: 'password' },
     ]
 
     const onSwitch = (whichOne) => {
         setTab(whichOne);
     }
 
-    const onSend = () => {
+    const onSend = (data) => {
+        console.log(data);
         alert(tab);
     }
 

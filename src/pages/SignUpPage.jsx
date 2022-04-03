@@ -6,31 +6,31 @@ import { useState } from "react";
 
 const SignUpPage = () => {
     const sameFields = [
-        { id: '3', title: 'Email', type: 'text' },
-        { id: '4', title: 'Password', type: 'password' },
-        { id: '5', title: 'Repeat password', type: 'password' },
+        { id: '3', name:'email', title: 'Email', type: 'text' },
+        { id: '4', name:'password', title: 'Password', type: 'password' },
+        { id: '5', name:'repeatPassword', title: 'Repeat password', type: 'password' },
     ];
 
     const fieldsEmployee = [
-        { id: '1', title: 'First Name', type: 'text' },
-        { id: '2', title: 'Last Name', type: 'text' },
+        { id: '1', name:'firstName', title: 'First Name', type: 'text' },
+        { id: '2', name:'lastName', title: 'Last Name', type: 'text' },
     ].concat(sameFields);
 
     const fieldsEmployer = [
-        { id: '1', title: 'Employer Name', type: 'text' },
-        { id: '2', title: 'Country', type: 'text' },
+        { id: '1', name:'employerName', title: 'Employer Name', type: 'text' },
+        { id: '2', name: 'country', title: 'Country', type: 'text' },
     ].concat(sameFields);
 
     const [tab, setTab] = useState(0);
     const [fields, setFields] = useState(fieldsEmployee);
-
 
     const onSwitch = (whichOne) => {
         setTab(whichOne);
         setFields(whichFields(whichOne));
     }
 
-    const onSend = () => {
+    const onSend = (data) => {
+        console.log(data);
         alert(tab);
     }
 
@@ -42,13 +42,14 @@ const SignUpPage = () => {
     const whichFields = (tab) => {
         return (tab? fieldsEmployer : fieldsEmployee);
     }
+
     return (
         <>
             <Header onSwitch={onSwitch} />
             <div className="container">
-                <SignForm 
+                <SignForm
                     title={setTitle(tab)} 
-                    fields={fields} 
+                    fields={fields}
                     onSend={onSend}
                     buttonTitle='Register' />
             </div>
