@@ -6,24 +6,21 @@ import Photo from '../resources/job-interview.png'
 import Footer from "../components/Footer";
 import { useState } from "react";
 import Background from '../components/Background';
+import {switchTab} from "../actions/mainActions";
+import {connect} from "react-redux";
 
-const MainPage = () => {
-  const [tab, setTab] = useState(0);
-
-  const onSwitch = (whichOne) => {
-    setTab(whichOne);
-  }
+const MainPage = (props) => {
 
   return (
     <>
-      <Header onSwitch={onSwitch}  />
+      <Header />
       <main>
         <div className="container">
         <section className='first-section'>
             <img src="https://thispersondoesnotexist.com/image" alt="A human being" />
             <div>
               <h1>findjob works for you.</h1>
-              {!tab ? <Button fontsize='24px' text='Create CV' /> : <input placeholder='Search' />}
+              {!props.tab ? <Button fontsize='24px' text='Create CV' /> : <input placeholder='Search' />}
             </div>
         </section>
         <section className='second-section'>
@@ -41,4 +38,10 @@ const MainPage = () => {
   );
 }
 
-export default MainPage
+const mapStateToProps = (state) => {
+    return {
+        tab: state.mainReducer.tab
+    }
+}
+
+export default connect(mapStateToProps, { switchTab})(MainPage);

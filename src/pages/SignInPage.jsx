@@ -1,23 +1,18 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Background from "../components/Background";
-import { useState } from "react";
 import SignForm from "../components/SignForm";
+import {setError, setErrorText} from "../actions/mainActions";
+import {connect} from "react-redux";
 
-const SignInPage = () => {
-    const [tab, setTab] = useState(0);
+const SignInPage = (props) => {
     const fields = [
         { id: '1', name: 'email', title: 'Email', type: 'text' },
         { id: '2', name: 'password', title: 'Password', type: 'password' },
     ]
 
-    const onSwitch = (whichOne) => {
-        setTab(whichOne);
-    }
-
     const onSend = (data) => {
         console.log(data);
-        alert(tab);
     }
 
     const setTitle = (tab) => {
@@ -27,10 +22,10 @@ const SignInPage = () => {
 
     return (
         <>
-            <Header onSwitch={onSwitch} />
+            <Header />
             <div className="container">
                 <SignForm
-                    title={setTitle(tab)}
+                    title={setTitle(props.tab)}
                     fields={fields}
                     onSend={onSend}
                     buttonTitle='Sign in' />
@@ -41,4 +36,12 @@ const SignInPage = () => {
     )
 }
 
-export default SignInPage;
+const mapStateToProps = (state) => {
+    return {
+        tab: state.mainReducer.tab,
+        isError: state.mainReducer.isError,
+        errorText: state.mainReducer.errorText
+    }
+}
+
+export default connect(mapStateToProps, { setError, setErrorText })(SignInPage);

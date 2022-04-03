@@ -2,9 +2,12 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Background from "../components/Background";
 import SignForm from "../components/SignForm";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 
-const SignUpPage = () => {
+import { setError, setErrorText } from '../actions/mainActions';
+import { connect } from 'react-redux';
+
+const SignUpPage = (props) => {
     const sameFields = [
         { id: '3', name:'email', title: 'Email', type: 'text' },
         { id: '4', name:'password', title: 'Password', type: 'password' },
@@ -21,17 +24,11 @@ const SignUpPage = () => {
         { id: '2', name: 'country', title: 'Country', type: 'text' },
     ].concat(sameFields);
 
-    const [tab, setTab] = useState(0);
     const [fields, setFields] = useState(fieldsEmployee);
-
-    const onSwitch = (whichOne) => {
-        setTab(whichOne);
-        setFields(whichFields(whichOne));
-    }
 
     const onSend = (data) => {
         console.log(data);
-        alert(tab);
+        props.setErrorText(data.email);
     }
 
     const setTitle = (tab) => {
@@ -43,12 +40,16 @@ const SignUpPage = () => {
         return (tab? fieldsEmployer : fieldsEmployee);
     }
 
+    useEffect(() => {
+        setFields(whichFields(props.tab));
+    },[props.tab]);
+
     return (
         <>
-            <Header onSwitch={onSwitch} />
+            <Header />
             <div className="container">
                 <SignForm
-                    title={setTitle(tab)} 
+                    title={setTitle(props.tab)}
                     fields={fields}
                     onSend={onSend}
                     buttonTitle='Register' />
@@ -59,4 +60,12 @@ const SignUpPage = () => {
     )
 }
 
-export default SignUpPage;
+const mapStateToProps = (state) => {
+    return {
+        tab: state.mainReducer.tab,
+        isError: state.mainReducer.isError,
+        errorText: state.mainReducer.errorText
+    }
+}
+
+export default connect(mapStateToProps,{ setError, setErrorText})(SignUpPage);
