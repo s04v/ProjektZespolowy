@@ -1,4 +1,4 @@
-name: Super-Linter
+name: .Net CI
 
 on: push
 
@@ -10,8 +10,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: backend-prod  
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+#      - name: Run Super-Linter
+#        uses: github/super-linter@v4
+#        env:
+#          DEFAULT_BRANCH: backend-prod  
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
