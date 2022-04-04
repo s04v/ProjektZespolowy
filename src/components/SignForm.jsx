@@ -23,7 +23,7 @@ export const SignForm = ({title, fields, onSend, buttonTitle}) => {
       {fields.map((item) =>
         <div key={item.id}>
           <p>{item.title}</p>
-          <input type={item.type} value={data[item.name]} name={item.name} onChange={onChange}/>
+          <input type={item.type} value={data[item.name]} name={item.name} onChange={onChange} autoComplete="off"/>
         </div>
       )}
       <Button onClick={() => onSend(data)} text={buttonTitle}/>
