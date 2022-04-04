@@ -1,0 +1,73 @@
+FindJobWebApi/.vs/*
+FindJobWebApi/*.com
+FindJobWebApi/*.class
+FindJobWebApi/*.dll
+FindJobWebApi/*.exe
+FindJobWebApi/*.pdb
+FindJobWebApi/*.dll.config
+FindJobWebApi/*.cache
+FindJobWebApi/*.suo
+FindJobWebApi/# Include dlls if they’re in the NuGet packages directory
+FindJobWebApi/!/packages/*/lib/*.dll
+FindJobWebApi/!/packages/*/lib/*/*.dll
+FindJobWebApi/# Include dlls if they're in the CommonReferences directory
+FindJobWebApi/!*CommonReferences/*.dll
+FindJobWebApi/####################
+FindJobWebApi/# VS Upgrade stuff #
+FindJobWebApi/####################
+FindJobWebApi/UpgradeLog.XML
+FindJobWebApi/_UpgradeReport_Files/
+FindJobWebApi/###############
+FindJobWebApi/# Directories #
+FindJobWebApi/###############
+FindJobWebApi/bin/
+FindJobWebApi/obj/
+FindJobWebApi/TestResults/
+FindJobWebApi/###################
+FindJobWebApi/# Web publish log #
+FindJobWebApi/###################
+FindJobWebApi/*.Publish.xml
+FindJobWebApi/#############
+FindJobWebApi/# Resharper #
+FindJobWebApi/#############
+FindJobWebApi//_ReSharper.*
+FindJobWebApi/*.ReSharper.*
+FindJobWebApi/############
+FindJobWebApi/# Packages #
+FindJobWebApi/############
+FindJobWebApi/# it’s better to unpack these files and commit the raw source
+FindJobWebApi/# git has its own built in compression methods
+FindJobWebApi/*.7z
+FindJobWebApi/*.dmg
+FindJobWebApi/*.gz
+FindJobWebApi/*.iso
+FindJobWebApi/*.jar
+FindJobWebApi/*.rar
+FindJobWebApi/*.tar
+FindJobWebApi/*.zip
+FindJobWebApi/######################
+FindJobWebApi/# Logs and databases #
+FindJobWebApi/######################
+FindJobWebApi/*.log
+FindJobWebApi/*.sqlite
+FindJobWebApi/# OS generated files #
+FindJobWebApi/######################
+FindJobWebApi/.DS_Store?
+FindJobWebApi/ehthumbs.db
+FindJobWebApi/Icon?
+FindJobWebApi/Thumbs.db
+FindJobWebApi/[Bb]in
+FindJobWebApi/[Oo]bj
+FindJobWebApi/[Tt]est[Rr]esults
+FindJobWebApi/*.suo
+FindJobWebApi/*.user
+FindJobWebApi/*.[Cc]ache
+FindJobWebApi/*[Rr]esharper*
+FindJobWebApi/packages
+FindJobWebApi/NuGet.exe
+FindJobWebApi/_[Ss]cripts
+FindJobWebApi/*.exe
+FindJobWebApi/*.dll
+FindJobWebApi/*.nupkg
+FindJobWebApi/*.ncrunchsolution
+FindJobWebApi/*.dot[Cc]over
