@@ -1,11 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobWebApi.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/user")]
     public class UserController : ControllerBase
     {
+        [AllowAnonymous]
+        [HttpPost("signin")]
+        public async Task<ActionResult<string>> Signin()
+        {
+            return "SignIn";
+        }
+
+        [AllowAnonymous]
+        [HttpPost("signup")]
+        public async Task<ActionResult<string>> SignUp()
+        {
+            return "SignUp";
+        }
+
+
         [HttpGet("{id}")]
         public async Task<ActionResult<string>> GetUserById([FromRoute] int id)
         {

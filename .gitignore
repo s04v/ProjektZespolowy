@@ -9,6 +9,7 @@
 *.dll.config
 *.cache
 .vs/
+*.appsettings.json
 .suo
 # Include dlls if they’re in the NuGet packages directory
 !/packages//lib/.dll

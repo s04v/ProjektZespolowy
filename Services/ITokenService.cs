@@ -2,6 +2,6 @@
 {
     public interface ITokenService
     {
-        public string generateToken();
+        public string generateToken(int id, string role);
     }
 }

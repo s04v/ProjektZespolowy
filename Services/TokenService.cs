@@ -7,22 +7,21 @@ namespace FindJobWebApi.Services
 {
     public class TokenService : ITokenService
     {
-        private object _jwtSettings;
+        private readonly JWTSettings _jwtSettings;
 
-        public string generateToken()
+        public TokenService(JWTSettings jwtSettings)
+        {
+            _jwtSettings = jwtSettings;
+        }
+        public string generateToken(int id, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            //var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey); // no secret key
+            var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    //new Claim(ClaimTypes.Email, login),
-                    //new Claim(ClaimTypes.Role, result.Item2),
-                    //new Claim(ClaimTypes.SerialNumber, result.Item1.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(45),
-                //SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                Subject = new ClaimsIdentity(getClaims(id, role)),
+                Expires = DateTime.UtcNow.AddMinutes(60),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -30,6 +29,15 @@ namespace FindJobWebApi.Services
 
 
             return string.Empty;
+        }
+
+        private Claim[] getClaims(int id, string role)
+        {
+            return new Claim[]
+            {
+                new Claim(ClaimTypes.Role, role),
+                new Claim(ClaimTypes.Actor, id.ToString())
+            };
         }
     }
 }

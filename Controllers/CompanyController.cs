@@ -7,6 +7,19 @@ namespace FindJobWebApi.Controllers
     [ApiController]
     public class CompanyController : ControllerBase
     {
+
+        [HttpPost("signin")]
+        public async Task<ActionResult<string>> Signin()
+        {
+            return "SignIn";
+        }
+
+        [HttpPost("signup")]
+        public async Task<ActionResult<string>> SignUp()
+        {
+            return "SignUp";
+        }
+
         [HttpPost("{id}/subscribe")]
         public async Task<ActionResult<string>> SubscribeToNewVacancies([FromRoute] int id)
         {
