@@ -1,7 +1,10 @@
-﻿namespace FindJobWebApi.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FindJobWebApi.Models
 {
     public class FirmAddress : Address
     {
-        public int Id { get; set; }
+        [Key]
+        public ulong FirmAddressId { get; set; }
     }
 }

@@ -4,7 +4,8 @@ namespace FindJobWebApi.Models
 {
     public class Candidtate
     {
-        public int Id { get; set; }
+        [Key]
+        public ulong CandidateId { get; set; }
         [Required]
         public int VacancyId { get; set; }
         public virtual Vacancy Vacancy { get; set; }

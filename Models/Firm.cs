@@ -5,7 +5,8 @@ namespace FindJobWebApi.Models
 {
     public class Firm : Profile
     {
-        public int Id { get; set; }
+        [Key]
+        public ulong FirmId { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

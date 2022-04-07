@@ -4,7 +4,8 @@ namespace FindJobWebApi.Models
 {
     public class Vacancy
     {
-        public int Id { get; set; }
+        [Key]
+        public ulong VacancyId { get; set; }
         [Required]
         public int FirmId { get; set; }
         public virtual Firm Firm { get; set; }
@@ -20,6 +21,6 @@ namespace FindJobWebApi.Models
         public decimal Salary { get; set; }
         [Required]
         public DateTime UpdateTime { get; set; }
-        
+
     }
 }
