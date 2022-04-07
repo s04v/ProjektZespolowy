@@ -1,7 +1,21 @@
-﻿namespace FindJobWebApi.Services
+﻿using AutoMapper;
+using FindJobWebApi.DataBase;
+using FindJobWebApi.DTOs;
+using FindJobWebApi.Models;
+using FindJobWebApi.Secure;
+namespace FindJobWebApi.Services
 {
     public class CompanyService : ICompanyService
     {
+        private readonly AppDBContext _context;
+        private readonly IMapper _mapper;
+
+        public CompanyService(AppDBContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+
+        }
         public void AddProfile()
         {
             throw new NotImplementedException();
@@ -27,9 +41,18 @@
             throw new NotImplementedException();
         }
 
-        public void SignUp()
+        public string SignUp(CreateCompanyDTO companyDTO)
         {
-            throw new NotImplementedException();
+            if(_context.Companies.Any(x => x.Email == companyDTO.Email))
+            {
+                return "Account with this email address already exists";
+            }
+            
+            var currentFirm = _mapper.Map<Company>(companyDTO);
+            currentFirm.Password = companyDTO.Password.getHash();
+            _context.Companies.Add(currentFirm);
+            _context.SaveChanges();
+            return "OK";
         }
 
         public void SubscribeCompany()

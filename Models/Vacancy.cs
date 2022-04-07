@@ -4,11 +4,10 @@ namespace FindJobWebApi.Models
 {
     public class Vacancy
     {
-        [Key]
-        public ulong VacancyId { get; set; }
-        [Required]
-        public int FirmId { get; set; }
-        public virtual Firm Firm { get; set; }
+
+        public ulong Id { get; set; }
+        public int CompanyId { get; set; }
+        public virtual Company Company { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]

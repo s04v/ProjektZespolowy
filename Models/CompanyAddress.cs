@@ -2,15 +2,16 @@
 
 namespace FindJobWebApi.Models
 {
-    public abstract class Address
+    public class CompanyAddress
     {
-        [Required]
+        
+        public int Id { get; set; }
         public string Country { get; set; }
-        [Required]
         public string City { get; set; }
-        [Required]
         public string AddressFirst { get; set; }
+
         public string AddressSecond { get; set; }
+
         public string PostalCode { get; set; }
     }
 }

@@ -1,4 +1,6 @@
+using AutoMapper;
 using FindJobWebApi.DataBase;
+using FindJobWebApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,10 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+//builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

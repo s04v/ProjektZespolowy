@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FindJobWebApi.DTOs;
+using FindJobWebApi.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobWebApi.Controllers
@@ -7,7 +9,14 @@ namespace FindJobWebApi.Controllers
     [ApiController]
     public class CompanyController : ControllerBase
     {
+        private readonly ICompanyService _service;
+       // private readonly ITokenService _tokenService;
 
+        public CompanyController(ICompanyService service)//, ITokenService tokenService)
+        {
+            _service = service;
+           // _tokenService = tokenService;
+        }
         [HttpPost("signin")]
         public async Task<ActionResult<string>> Signin()
         {
@@ -15,9 +24,14 @@ namespace FindJobWebApi.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<ActionResult<string>> SignUp()
+        public async Task<ActionResult<string>> SignUp([FromBody] CreateCompanyDTO companyDTO)
         {
-            return "SignUp";
+            if(!ModelState.IsValid)
+            {
+                return NotFound();
+            }
+            var result = _service.SignUp(companyDTO);
+            return result;
         }
 
         [HttpPost("{id}/subscribe")]
