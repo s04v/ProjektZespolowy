@@ -1,19 +1,21 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace FindJobWebApi.Migrations
 {
-    public partial class Init : Migration
+    public partial class Init1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "FirmAddresses",
+                name: "CompanyAddresses",
                 columns: table => new
                 {
-                    FirmAddressId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Country = table.Column<string>(type: "text", nullable: false),
                     City = table.Column<string>(type: "text", nullable: false),
                     AddressFirst = table.Column<string>(type: "text", nullable: false),
@@ -22,14 +24,15 @@ namespace FindJobWebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FirmAddresses", x => x.FirmAddressId);
+                    table.PrimaryKey("PK_CompanyAddresses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "UserAddresses",
                 columns: table => new
                 {
-                    UserAddressId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Country = table.Column<string>(type: "text", nullable: false),
                     City = table.Column<string>(type: "text", nullable: false),
                     AddressFirst = table.Column<string>(type: "text", nullable: false),
@@ -38,58 +41,57 @@ namespace FindJobWebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAddresses", x => x.UserAddressId);
+                    table.PrimaryKey("PK_UserAddresses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Firms",
+                name: "Companies",
                 columns: table => new
                 {
-                    FirmId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    FirmAddressId = table.Column<int>(type: "integer", nullable: false),
-                    FirmAddressId1 = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
-                    Website = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CompanyName = table.Column<string>(type: "text", nullable: false),
+                    CompanyAddressId = table.Column<int>(type: "integer", nullable: true),
+                    Website = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    PasswordHash = table.Column<string>(type: "text", nullable: false),
-                    Desciption = table.Column<string>(type: "text", nullable: false)
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Desciption = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Firms", x => x.FirmId);
+                    table.PrimaryKey("PK_Companies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Firms_FirmAddresses_FirmAddressId1",
-                        column: x => x.FirmAddressId1,
-                        principalTable: "FirmAddresses",
-                        principalColumn: "FirmAddressId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Companies_CompanyAddresses_CompanyAddressId",
+                        column: x => x.CompanyAddressId,
+                        principalTable: "CompanyAddresses",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     BirthdayDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ContactNumber = table.Column<string>(type: "text", nullable: false),
                     UserAddressId = table.Column<int>(type: "integer", nullable: false),
-                    UserAddressId1 = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
                     Gender = table.Column<string>(type: "text", nullable: false),
                     Experience = table.Column<float>(type: "real", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    PasswordHash = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
                     Desciption = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_UserAddresses_UserAddressId1",
-                        column: x => x.UserAddressId1,
+                        name: "FK_Users_UserAddresses_UserAddressId",
+                        column: x => x.UserAddressId,
                         principalTable: "UserAddresses",
-                        principalColumn: "UserAddressId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -97,9 +99,8 @@ namespace FindJobWebApi.Migrations
                 name: "Vacancies",
                 columns: table => new
                 {
-                    VacancyId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
-                    FirmId = table.Column<int>(type: "integer", nullable: false),
-                    FirmId1 = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Requirements = table.Column<string>(type: "text", nullable: false),
@@ -109,12 +110,12 @@ namespace FindJobWebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vacancies", x => x.VacancyId);
+                    table.PrimaryKey("PK_Vacancies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vacancies_Firms_FirmId1",
-                        column: x => x.FirmId1,
-                        principalTable: "Firms",
-                        principalColumn: "FirmId",
+                        name: "FK_Vacancies_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -122,33 +123,33 @@ namespace FindJobWebApi.Migrations
                 name: "Candidtates",
                 columns: table => new
                 {
-                    CandidateId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     VacancyId = table.Column<int>(type: "integer", nullable: false),
                     VacancyId1 = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    UserId1 = table.Column<decimal>(type: "numeric(20,0)", nullable: false)
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Candidtates", x => x.CandidateId);
+                    table.PrimaryKey("PK_Candidtates", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Candidtates_Users_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Candidtates_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Candidtates_Vacancies_VacancyId1",
                         column: x => x.VacancyId1,
                         principalTable: "Vacancies",
-                        principalColumn: "VacancyId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Candidtates_UserId1",
+                name: "IX_Candidtates_UserId",
                 table: "Candidtates",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Candidtates_VacancyId1",
@@ -156,19 +157,19 @@ namespace FindJobWebApi.Migrations
                 column: "VacancyId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Firms_FirmAddressId1",
-                table: "Firms",
-                column: "FirmAddressId1");
+                name: "IX_Companies_CompanyAddressId",
+                table: "Companies",
+                column: "CompanyAddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_UserAddressId1",
+                name: "IX_Users_UserAddressId",
                 table: "Users",
-                column: "UserAddressId1");
+                column: "UserAddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vacancies_FirmId1",
+                name: "IX_Vacancies_CompanyId",
                 table: "Vacancies",
-                column: "FirmId1");
+                column: "CompanyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -186,10 +187,10 @@ namespace FindJobWebApi.Migrations
                 name: "UserAddresses");
 
             migrationBuilder.DropTable(
-                name: "Firms");
+                name: "Companies");
 
             migrationBuilder.DropTable(
-                name: "FirmAddresses");
+                name: "CompanyAddresses");
         }
     }
 }

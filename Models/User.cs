@@ -2,10 +2,10 @@
 
 namespace FindJobWebApi.Models
 {
-    public class User : Profile
+    public class User
     {
-        [Key]
-        public ulong UserId { get; set; }
+        
+        public int Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -16,5 +16,10 @@ namespace FindJobWebApi.Models
         public virtual UserAddress UserAddress { get; set; }
         public string Gender { get; set; }
         public float Experience { get; set; }
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Password { get; set; }
+        public string Desciption { get; set; }
     }
 }
