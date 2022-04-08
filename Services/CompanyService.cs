@@ -36,16 +36,22 @@ namespace FindJobWebApi.Services
             throw new NotImplementedException();
         }
 
-        public void SignIn()
+        public string SignIn(LoginCompanyDTO companyDTO)
         {
-            throw new NotImplementedException();
+           var currentCompany = _context.Companies.SingleOrDefault(x => x.Email.Equals(companyDTO.Email));
+           var hashedPassword = companyDTO.Password.getHash();
+            if (currentCompany == null || !hashedPassword.Equals(currentCompany.Password))
+            {
+                return "Login/Password is incorrect!";
+            }
+            return currentCompany.Id.ToString();
         }
 
         public string SignUp(CreateCompanyDTO companyDTO)
         {
             if (_context.Companies.Any(x => x.Email == companyDTO.Email))
             {
-                return "Account with this email address already exists";
+                return "Account with this email address already exists!";
             }
 
             var currentFirm = _mapper.Map<Company>(companyDTO);

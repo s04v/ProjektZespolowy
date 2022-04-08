@@ -10,17 +10,31 @@ namespace FindJobWebApi.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _service;
-       // private readonly ITokenService _tokenService;
+        private readonly ITokenService _tokenService;
 
-        public CompanyController(ICompanyService service)//, ITokenService tokenService)
+        public CompanyController(ICompanyService service, ITokenService tokenService)
         {
             _service = service;
-           // _tokenService = tokenService;
+           _tokenService = tokenService;
         }
         [HttpPost("signin")]
-        public async Task<ActionResult<string>> Signin()
+        public async Task<ActionResult<string>> Signin([FromBody] LoginCompanyDTO companyDTO)
         {
-            return "SignIn";
+            if (!ModelState.IsValid)
+            {
+                return NotFound();
+            }
+            var result = _service.SignIn(companyDTO);
+
+
+            if (!int.TryParse(result, out int id))
+            {
+                return result;
+            }
+
+            var token = _tokenService.generateToken(id, "company");
+            return token;
+
         }
 
         [HttpPost("signup")]

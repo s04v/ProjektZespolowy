@@ -7,6 +7,7 @@ namespace FindJobWebApi.Secure
     {
         public static string getHash(this string password)
         {
+            
             string salt = "fkjflefjek22";
             var hasher = MD5.Create();
             var bytes = Encoding.ASCII.GetBytes(password);

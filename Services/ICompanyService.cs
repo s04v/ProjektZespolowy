@@ -4,7 +4,7 @@ namespace FindJobWebApi.Services
 {
     public interface ICompanyService
     {
-        public void SignIn();
+        public string SignIn(LoginCompanyDTO companyDTO);
 
         public string SignUp(CreateCompanyDTO companyDTO);
 

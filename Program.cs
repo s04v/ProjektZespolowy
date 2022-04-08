@@ -23,7 +23,7 @@ builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddSingleton(AutoMapperConfiguration.Initialize());
 
 builder.Services.AddControllers();
-//builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
