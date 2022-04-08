@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -9,9 +10,9 @@ namespace FindJobWebApi.Services
     {
         private readonly JWTSettings _jwtSettings;
 
-        public TokenService(JWTSettings jwtSettings)
+        public TokenService(IOptions<JWTSettings> jwtSettings)
         {
-            _jwtSettings = jwtSettings;
+            _jwtSettings = jwtSettings.Value;
         }
         public string generateToken(int id, string role)
         {
@@ -27,8 +28,7 @@ namespace FindJobWebApi.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var loginedUserToken = tokenHandler.WriteToken(token);
 
-
-            return string.Empty;
+            return loginedUserToken;
         }
 
         private Claim[] getClaims(int id, string role)
@@ -36,7 +36,7 @@ namespace FindJobWebApi.Services
             return new Claim[]
             {
                 new Claim(ClaimTypes.Role, role),
-                new Claim(ClaimTypes.Actor, id.ToString())
+                new Claim(ClaimTypes.Name, id.ToString())
             };
         }
     }
