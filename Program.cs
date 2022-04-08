@@ -1,4 +1,5 @@
 using AutoMapper;
+using FindJobWebApi.AutoMapper;
 using FindJobWebApi.DataBase;
 using FindJobWebApi.Services;
 using Microsoft.EntityFrameworkCore;
@@ -15,13 +16,13 @@ builder.Services.AddAuthentication("OAuth").
     });
 
 
-builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<ICompanyService, CompanyService>();
+
+builder.Services.AddSingleton(AutoMapperConfiguration.Initialize());
+
+builder.Services.AddControllers();
 //builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddEndpointsApiExplorer();

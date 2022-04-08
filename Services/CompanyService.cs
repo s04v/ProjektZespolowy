@@ -43,11 +43,11 @@ namespace FindJobWebApi.Services
 
         public string SignUp(CreateCompanyDTO companyDTO)
         {
-            if(_context.Companies.Any(x => x.Email == companyDTO.Email))
+            if (_context.Companies.Any(x => x.Email == companyDTO.Email))
             {
                 return "Account with this email address already exists";
             }
-            
+
             var currentFirm = _mapper.Map<Company>(companyDTO);
             currentFirm.Password = companyDTO.Password.getHash();
             _context.Companies.Add(currentFirm);
