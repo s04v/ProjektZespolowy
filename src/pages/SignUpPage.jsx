@@ -2,9 +2,15 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Background from "../components/Background";
 import SignForm from "../components/SignForm";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 
-const SignUpPage = () => {
+import { setError, setErrorText } from '../actions/mainActions';
+import { connect } from 'react-redux';
+import UserApi from "../api/UserApi";
+import CompanyApi from "../api/CompanyApi";
+
+
+const SignUpPage = (props) => {
     const sameFields = [
         { id: '3', name:'email', title: 'Email', type: 'text' },
         { id: '4', name:'password', title: 'Password', type: 'password' },
@@ -17,21 +23,49 @@ const SignUpPage = () => {
     ].concat(sameFields);
 
     const fieldsEmployer = [
-        { id: '1', name:'employerName', title: 'Employer Name', type: 'text' },
-        { id: '2', name: 'country', title: 'Country', type: 'text' },
+        { id: '1', name:'companyName', title: 'Employer Name', type: 'text' }
     ].concat(sameFields);
 
-    const [tab, setTab] = useState(0);
     const [fields, setFields] = useState(fieldsEmployee);
 
-    const onSwitch = (whichOne) => {
-        setTab(whichOne);
-        setFields(whichFields(whichOne));
-    }
-
     const onSend = (data) => {
-        console.log(data);
-        alert(tab);
+        for(const key in data) {
+            if(data[key] === '') {
+                props.setError(true);
+                props.setErrorText(key + " cannot be empty");
+                return;
+            }
+        }
+
+        if(data['password'] != data['repeatPassword'])
+        {
+            props.setError(true);
+            props.setErrorText("Passwords do not match");
+            return;
+        }
+
+        delete data['repeatPassword'];
+        const send = props.tab ?  CompanyApi.registerAccount : UserApi.registerAccount;
+        // 0 - company
+        // 1 - user     
+        send(data)
+            .then((result) => {
+                if(result.data === "OK"){
+                    props.setError(false);
+                }
+                else {
+                    props.setError(true);
+                    props.setErrorText(result.data);
+                }
+            })
+            .catch((error) => {
+                props.setError(true);
+
+                if('data' in error.response.data)
+                    props.setErrorText(error.response.data.data);
+                else
+                    props.setErrorText(Object.values(error.response.data.errors)[0][0]);
+            });
     }
 
     const setTitle = (tab) => {
@@ -43,12 +77,23 @@ const SignUpPage = () => {
         return (tab? fieldsEmployer : fieldsEmployee);
     }
 
+    useEffect(() => {
+        setFields(whichFields(props.tab));
+
+        props.setError(false);
+
+        return () => {
+            console.log("unmount");
+            props.setError(false);
+        }
+    },[props.tab]);
+
     return (
         <>
-            <Header onSwitch={onSwitch} />
+            <Header />
             <div className="container">
                 <SignForm
-                    title={setTitle(tab)} 
+                    title={setTitle(props.tab)}
                     fields={fields}
                     onSend={onSend}
                     buttonTitle='Register' />
@@ -59,4 +104,12 @@ const SignUpPage = () => {
     )
 }
 
-export default SignUpPage;
+const mapStateToProps = (state) => {
+    return {
+        tab: state.mainReducer.tab,
+        isError: state.mainReducer.isError,
+        errorText: state.mainReducer.errorText
+    }
+}
+
+export default connect(mapStateToProps,{ setError, setErrorText})(SignUpPage);
