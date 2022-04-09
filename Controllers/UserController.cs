@@ -54,9 +54,22 @@ namespace FindJobWebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("signup")]
-        public async Task<ActionResult<string>> SignUp()
+        public async Task<ActionResult<string>> SignUp([FromBody] CreateUserDTO userDTO)
         {
-            return "SignUp";
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y => y.Count > 0)
+                           .ToList();
+
+                return BadRequest(ResponseConvertor.GetResult("error", errors));
+            }
+
+            var result = _service.SignUp(userDTO);
+
+            if (!result.Equals("OK")) return Conflict(ResponseConvertor.GetResult("error", result));
+
+            return Ok(ResponseConvertor.GetResult("OK", result));
         }
 
 
