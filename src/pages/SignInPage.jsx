@@ -4,6 +4,7 @@ import Background from "../components/Background";
 import SignForm from "../components/SignForm";
 import {setError, setErrorText} from "../actions/mainActions";
 import {connect} from "react-redux";
+import { login } from "../api/CompanyApi";
 
 const SignInPage = (props) => {
     const fields = [
@@ -13,6 +14,19 @@ const SignInPage = (props) => {
 
     const onSend = (data) => {
         console.log(data);
+
+        const unwrap = ({companyName, email, password}) => ({companyName, email, password});
+
+        console.log(unwrap(data));
+        login(unwrap(data))
+            .then((result) => {
+                    props.setError(true);
+                    props.setErrorText(result.data);
+            })
+            .catch((error) => {
+                props.setError(true);
+                props.setErrorText('Login/Password is incorrect!');
+            });
     }
 
     const setTitle = (tab) => {

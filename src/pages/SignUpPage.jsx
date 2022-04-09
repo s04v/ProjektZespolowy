@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 
 import { setError, setErrorText } from '../actions/mainActions';
 import { connect } from 'react-redux';
+import { registerAccount } from "../api/CompanyApi";
 
 const SignUpPage = (props) => {
     const sameFields = [
@@ -20,7 +21,7 @@ const SignUpPage = (props) => {
     ].concat(sameFields);
 
     const fieldsEmployer = [
-        { id: '1', name:'employerName', title: 'Employer Name', type: 'text' },
+        { id: '1', name:'companyName', title: 'Employer Name', type: 'text' },
         { id: '2', name: 'country', title: 'Country', type: 'text' },
     ].concat(sameFields);
 
@@ -28,7 +29,25 @@ const SignUpPage = (props) => {
 
     const onSend = (data) => {
         console.log(data);
-        props.setErrorText(data.email);
+        const unwrap = ({companyName, email, password}) => ({companyName, email, password});
+
+        console.log(unwrap(data));
+        registerAccount(unwrap(data))
+            .then((result) => {
+                if(result.data === "OK"){
+                    props.setError(false);
+                }
+                else {
+                    props.setError(true);
+                    props.setErrorText(result.data);
+                }
+            })
+            .catch((error) => {
+                props.setError(true);
+                // back-end returns 400 when password less then 6 or email wrong
+                // To fix
+                props.setErrorText('Password must contain at least 6 symbols');
+            });
     }
 
     const setTitle = (tab) => {

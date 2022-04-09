@@ -11,6 +11,18 @@
   max-width: 500px;
   border-radius: 30px;
 
+  .hidden {
+    display: none;
+  }
+
+  .error {
+    display: block;
+    background-color: $clr-error;
+    color: $clr-white;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
   button {
     align-self: end;
   }

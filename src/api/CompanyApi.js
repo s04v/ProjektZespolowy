@@ -1,11 +1,11 @@
-import Backend from './index';
+import Api from './index';
 
-const registerAccount = (data) => {
-    // return Backend.post('/company/signup', data);
+const registerAccount = async (data) => {
+    return await Api.post('/api/company/signup', data);
 }
 
-const login = (data) => {
-    // return Backend.post('/company/signin', data);
+const login = async (data) => {
+    return await Api.post('/api/company/signin', data);
 }
 
 export {
