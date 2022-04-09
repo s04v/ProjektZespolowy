@@ -10,16 +10,17 @@ namespace FindJobWebApi.Models
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        public DateTime BirthdayDate { get; set; }
-        public string ContactNumber { get; set; }
-        public int UserAddressId { get; set; }
+        public DateTime? BirthdayDate { get; set; } =default(DateTime?);
+        public string? ContactNumber { get; set; }= string.Empty;
+        public int? UserAddressId { get; set; } = default(int)
         public virtual UserAddress UserAddress { get; set; }
-        public string Gender { get; set; }
-        public float Experience { get; set; }
+        public string? Gender { get; set; } = string.Empty;
+        public float? Experience { get; set; } = default(float);
+
         [Required]
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-        public string Desciption { get; set; }
+        public string? Desciption { get; set; } = string.Empty;
     }
 }

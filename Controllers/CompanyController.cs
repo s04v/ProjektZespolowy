@@ -33,7 +33,10 @@ namespace FindJobWebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ResponseConvertor.GetResult("error", "Input data is not valid"));
+                var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y => y.Count > 0)
+                           .ToList();
+                return BadRequest(ResponseConvertor.GetResult("error", errors));
             }
             var result = _service.SignIn(companyDTO);
 
@@ -57,7 +60,11 @@ namespace FindJobWebApi.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return BadRequest(ResponseConvertor.GetResult("error", "Input data is not valid"));
+                var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y => y.Count > 0)
+                           .ToList();
+
+                return BadRequest(ResponseConvertor.GetResult("error", errors));
             }
 
             var result = _service.SignUp(companyDTO);
