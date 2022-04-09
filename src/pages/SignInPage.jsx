@@ -8,6 +8,7 @@ import { login } from "../api/UserApi";
 import {useEffect} from "react";
 import UserApi from "../api/UserApi";
 import CompanyApi from "../api/CompanyApi";
+import Cookies from "universal-cookie";
 
 const SignInPage = (props) => {
     const fields = [
@@ -28,8 +29,12 @@ const SignInPage = (props) => {
 
         send(data)
             .then((result) => {
+                console.log(result);
                     props.setError(false);
-                    props.setErrorText(result.data);
+
+                    alert("jwt token - " + result.data.data);
+                    const cookies = new Cookies();
+                    cookies.set('jwt', result.data.data);
             })
             .catch((error) => {
                 props.setError(true);
