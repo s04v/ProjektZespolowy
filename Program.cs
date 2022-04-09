@@ -21,6 +21,21 @@ builder.Services.Configure<JWTSettings>(jwtSection);
 var appSettings = jwtSection.Get<JWTSettings>();
 var key = Encoding.ASCII.GetBytes(appSettings.SecretKey);
 
+
+builder.Services.AddCors(options =>
+{
+    // need to be changed to .AddPolicy with name
+    // and then use [EnableCors("Policy")]
+    options.AddDefaultPolicy(policy => 
+        {
+            policy.WithOrigins("http://localhost:3000",
+            "https://pz-findjob.herokuapp.com")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+        });
+});
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -82,6 +97,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
