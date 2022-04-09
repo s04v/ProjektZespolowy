@@ -1,11 +1,9 @@
-using AutoMapper;
 using FindJobWebApi;
 using FindJobWebApi.AutoMapper;
 using FindJobWebApi.DataBase;
 using FindJobWebApi.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 
@@ -22,6 +20,27 @@ var appSettings = jwtSection.Get<JWTSettings>();
 var key = Encoding.ASCII.GetBytes(appSettings.SecretKey);
 
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie("Cookie", config =>
+{
+    config.LoginPath = "/company/signin";
+    config.AccessDeniedPath = "/company/signin"; // temporary
+});
+
+builder.Services.AddAuthorization(conf =>
+{
+    conf.AddPolicy("Company", builder =>
+    {
+        builder.RequireClaim(ClaimTypes.Role, "Company");
+    });
+    conf.AddPolicy("User", builder =>
+    {
+        builder.RequireClaim(ClaimTypes.Role, "User");
+    });
+});
+
+
+
 builder.Services.AddCors(options =>
 {
     // need to be changed to .AddPolicy with name
@@ -36,27 +55,7 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddAuthentication(x =>
-{
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddCookie("Cookie", config =>
-    {
-        config.LoginPath = "/company/signin";
-        config.AccessDeniedPath = "/company/signin"; // temporary
-    });
 
-builder.Services.AddAuthorization(conf =>
-{
-    conf.AddPolicy("Company", builder =>
-    {
-        builder.RequireClaim(ClaimTypes.Role, "company");
-    });
-    conf.AddPolicy("User", builder =>
-    {
-        builder.RequireClaim(ClaimTypes.Role, "user");
-    });
-});
     //.AddJwtBearer(x =>
     //{
     //    x.RequireHttpsMetadata = true;

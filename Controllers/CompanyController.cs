@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Newtonsoft.Json.Serialization;
 
 namespace FindJobWebApi.Controllers
 {
@@ -28,14 +29,14 @@ namespace FindJobWebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return NotFound();
+                return BadRequest();
             }
             var result = _service.SignIn(companyDTO);
 
 
             if (!int.TryParse(result, out int id))
             {
-                return result;
+                return BadRequest(result);
             }
 
             var token = _tokenService.generateToken(id, "Company");
@@ -50,9 +51,9 @@ namespace FindJobWebApi.Controllers
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             await HttpContext.SignInAsync("Cookie", claimsPrincipal);
 
-            return token;
-
+            return Ok(new Dictionary<string, string>() { { "token", token } });    
         }
+
         [AllowAnonymous]
         [HttpPost("signup")]
         public async Task<ActionResult<string>> SignUp([FromBody] CreateCompanyDTO companyDTO)
@@ -62,10 +63,11 @@ namespace FindJobWebApi.Controllers
                 return NotFound();
             }
             var result = _service.SignUp(companyDTO);
-            return result;
+            if (!result.Equals("OK")) return Conflict(result);
+            
+            return Ok(result);
         }
 
-        [Authorize(Roles = "User")]
         [HttpPost("{id}/subscribe")]
         public async Task<ActionResult<string>> SubscribeToNewVacancies([FromRoute] int id)
         {
@@ -87,11 +89,11 @@ namespace FindJobWebApi.Controllers
         {
             return "ListOfVacanciesOfCompany";
         }
+
+        //[Authorize(Roles = "Company")]
         [HttpGet("profile")]
         public async Task<ActionResult<string>> GetCompanyProfile()
         {
-
-
             return "GetCompanyProfile";
         }
         [HttpPost("profile")]
