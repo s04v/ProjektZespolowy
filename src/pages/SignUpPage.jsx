@@ -6,7 +6,9 @@ import {useEffect, useState} from "react";
 
 import { setError, setErrorText } from '../actions/mainActions';
 import { connect } from 'react-redux';
-import { registerAccount } from "../api/CompanyApi";
+import UserApi from "../api/UserApi";
+import CompanyApi from "../api/CompanyApi";
+
 
 const SignUpPage = (props) => {
     const sameFields = [
@@ -21,18 +23,32 @@ const SignUpPage = (props) => {
     ].concat(sameFields);
 
     const fieldsEmployer = [
-        { id: '1', name:'companyName', title: 'Employer Name', type: 'text' },
-        { id: '2', name: 'country', title: 'Country', type: 'text' },
+        { id: '1', name:'companyName', title: 'Employer Name', type: 'text' }
     ].concat(sameFields);
 
     const [fields, setFields] = useState(fieldsEmployee);
 
     const onSend = (data) => {
-        console.log(data);
-        const unwrap = ({companyName, email, password}) => ({companyName, email, password});
+        for(const key in data) {
+            if(data[key] === '') {
+                props.setError(true);
+                props.setErrorText(key + " cannot be empty");
+                return;
+            }
+        }
 
-        console.log(unwrap(data));
-        registerAccount(unwrap(data))
+        if(data['password'] != data['repeatPassword'])
+        {
+            props.setError(true);
+            props.setErrorText("Passwords do not match");
+            return;
+        }
+
+        delete data['repeatPassword'];
+        const send = props.tab ?  CompanyApi.registerAccount : UserApi.registerAccount;
+        // 0 - company
+        // 1 - user     
+        send(data)
             .then((result) => {
                 if(result.data === "OK"){
                     props.setError(false);
@@ -44,9 +60,11 @@ const SignUpPage = (props) => {
             })
             .catch((error) => {
                 props.setError(true);
-                // back-end returns 400 when password less then 6 or email wrong
-                // To fix
-                props.setErrorText('Password must contain at least 6 symbols');
+
+                if('data' in error.response.data)
+                    props.setErrorText(error.response.data.data);
+                else
+                    props.setErrorText(Object.values(error.response.data.errors)[0][0]);
             });
     }
 
@@ -61,6 +79,13 @@ const SignUpPage = (props) => {
 
     useEffect(() => {
         setFields(whichFields(props.tab));
+
+        props.setError(false);
+
+        return () => {
+            console.log("unmount");
+            props.setError(false);
+        }
     },[props.tab]);
 
     return (

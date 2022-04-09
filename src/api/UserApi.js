@@ -1,14 +1,17 @@
-import Backend from './index'
+import Api from './index'
 
-const registerAccount = (data) => {
-    // return Backend.post('/user/signup', data);
+const registerAccount = async (data) => {
+    return await Api.post('/api/user/signup', data);
 }
 
-const login = (data) => {
-    // return Backend.post('/user/signin', data);
+ const login = async (data) => {
+    return await Api.post('/api/user/signin', data);
 }
 
-export {
-    registerAccount,
-    login
+const helper = {
+    registerAccount: registerAccount,
+    login: login
 }
+
+export  { registerAccount, login };
+export default helper;

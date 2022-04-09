@@ -4,7 +4,10 @@ import Background from "../components/Background";
 import SignForm from "../components/SignForm";
 import {setError, setErrorText} from "../actions/mainActions";
 import {connect} from "react-redux";
-import { login } from "../api/CompanyApi";
+import { login } from "../api/UserApi";
+import {useEffect} from "react";
+import UserApi from "../api/UserApi";
+import CompanyApi from "../api/CompanyApi";
 
 const SignInPage = (props) => {
     const fields = [
@@ -13,14 +16,19 @@ const SignInPage = (props) => {
     ]
 
     const onSend = (data) => {
-        console.log(data);
+        for(const key in data) {
+            if(data[key] === '') {
+                props.setError(true);
+                props.setErrorText(key + " cannot be empty");
+                return;
+            }
+        }
 
-        const unwrap = ({companyName, email, password}) => ({companyName, email, password});
+        const send = props.tab ?  CompanyApi.login : UserApi.login;
 
-        console.log(unwrap(data));
-        login(unwrap(data))
+        send(data)
             .then((result) => {
-                    props.setError(true);
+                    props.setError(false);
                     props.setErrorText(result.data);
             })
             .catch((error) => {
@@ -33,6 +41,11 @@ const SignInPage = (props) => {
         const type = (tab ? 'Employer' : 'Employee');
         return type + ' login';
     }
+
+    useEffect(() => {
+        props.setError(false);
+
+    },[props.tab])
 
     return (
         <>
