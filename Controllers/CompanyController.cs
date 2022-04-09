@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Newtonsoft.Json.Serialization;
+using FindJobWebApi.Response;
 
 namespace FindJobWebApi.Controllers
 {
@@ -17,10 +18,13 @@ namespace FindJobWebApi.Controllers
         private readonly ICompanyService _service;
         private readonly ITokenService _tokenService;
 
-        public CompanyController(ICompanyService service, ITokenService tokenService)
+        private readonly ICookieService _cookieService;
+
+        public CompanyController(ICompanyService service, ITokenService tokenService, ICookieService cookieService)
         {
             _service = service;
            _tokenService = tokenService;
+            _cookieService = cookieService;
         }
 
         [AllowAnonymous]
@@ -29,29 +33,22 @@ namespace FindJobWebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ResponseConvertor.GetResult("error", "Input data is not valid"));
             }
             var result = _service.SignIn(companyDTO);
 
 
             if (!int.TryParse(result, out int id))
             {
-                return BadRequest(result);
+                return BadRequest(ResponseConvertor.GetResult("error", result));
             }
 
             var token = _tokenService.generateToken(id, "Company");
 
-            var claims = new List<Claim>()
-            { 
-                new Claim(ClaimTypes.Role, "Company"),
-                new Claim(ClaimTypes.Name, token)
-            };
-
-            var claimsIdentity = new ClaimsIdentity(claims, "Cookie");
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+            var claimsPrincipal = _cookieService.GetClaimsPrincipal("Company", token);
             await HttpContext.SignInAsync("Cookie", claimsPrincipal);
 
-            return Ok(new Dictionary<string, string>() { { "token", token } });    
+            return Ok(ResponseConvertor.GetResult("OK", token));    
         }
 
         [AllowAnonymous]
@@ -60,12 +57,14 @@ namespace FindJobWebApi.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return NotFound();
+                return BadRequest(ResponseConvertor.GetResult("error", "Input data is not valid"));
             }
+
             var result = _service.SignUp(companyDTO);
-            if (!result.Equals("OK")) return Conflict(result);
+
+            if (!result.Equals("OK")) return Conflict(ResponseConvertor.GetResult("error", result));
             
-            return Ok(result);
+            return Ok(ResponseConvertor.GetResult("OK", result));
         }
 
         [HttpPost("{id}/subscribe")]

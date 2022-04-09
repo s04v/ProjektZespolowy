@@ -55,29 +55,13 @@ builder.Services.AddCors(options =>
         });
 });
 
-
-    //.AddJwtBearer(x =>
-    //{
-    //    x.RequireHttpsMetadata = true;
-    //    x.SaveToken = true;
-    //    x.TokenValidationParameters = new TokenValidationParameters
-    //    {
-    //        ValidateIssuerSigningKey = true,
-    //        IssuerSigningKey = new SymmetricSecurityKey(key),
-    //        ValidateIssuer = false,
-    //        ValidateAudience = false,
-    //        ClockSkew = TimeSpan.Zero
-    //    };
-
-    //});
-
-
-builder.Services.AddScoped<ICompanyService, CompanyService>();
-
 builder.Services.AddSingleton(AutoMapperConfiguration.Initialize());
 
-builder.Services.AddControllers();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICookieService, CookieService>();
+
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
