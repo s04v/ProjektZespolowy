@@ -57,6 +57,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddSingleton(AutoMapperConfiguration.Initialize());
 
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICookieService, CookieService>();
