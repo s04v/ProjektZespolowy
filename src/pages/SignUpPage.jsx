@@ -4,7 +4,7 @@ import Background from "../components/Background";
 import SignForm from "../components/SignForm";
 import {useEffect, useState} from "react";
 
-import { setError, setErrorText } from '../actions/mainActions';
+import { setError, setErrorText } from '../actions/MainActions';
 import { connect } from 'react-redux';
 import UserApi from "../api/UserApi";
 import CompanyApi from "../api/CompanyApi";

@@ -17,17 +17,36 @@ const setError = (flag) => {
     }
 }
 
+const setRole = (role) => {
+    return (dispatch) => {
+        dispatch({
+            type: mainTypes.setRole,
+            payload: { role: role }
+        });
+    }
+}
+
 const setErrorText = (text) => {
     return (dispatch) => {
         dispatch({
             type: mainTypes.setError,
-            payload: { errorText: text }
+            payload: {errorText: text}
+        });
+    }
+}
+
+const clearMainState = () => {
+    return (dispatch) => {
+        dispatch({
+            type: mainTypes.clear,
         });
     }
 }
 
 export {
     switchTab,
+    setRole,
     setError,
-    setErrorText
+    setErrorText,
+    clearMainState
 }

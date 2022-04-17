@@ -6,7 +6,7 @@ import Photo from '../resources/job-interview.png'
 import Footer from "../components/Footer";
 import { useState } from "react";
 import Background from '../components/Background';
-import {switchTab} from "../actions/mainActions";
+import {switchTab} from "../actions/MainActions";
 import {connect} from "react-redux";
 
 const MainPage = (props) => {

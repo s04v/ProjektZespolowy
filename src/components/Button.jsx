@@ -1,6 +1,5 @@
 import style from '../styles/components/button.module.scss';
 
-
 const Button = ({text='Button', fontsize='1em', onClick=null, id=null}) => {
   return (
     <button 

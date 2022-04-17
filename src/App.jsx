@@ -8,8 +8,11 @@ import {
     Route,
 } from "react-router-dom";
 
+import CheckAuth from "./utils/CheckAuth";
+
 const SignInPage = React.lazy(() => import ('./pages/SignInPage'));
 const SignUpPage = React.lazy(() => import ('./pages/SignUpPage'));
+const ProfilePage = React.lazy(() => import ('./pages/ProfilePage'));
 
 function App() {
   return (
@@ -20,6 +23,7 @@ function App() {
                     <Route path='/' element={<MainPage />} />
                     <Route path='/signin' element={<SignInPage />} />
                     <Route path='/signup' element={<SignUpPage />} />
+                    <Route path='/profile' element={<CheckAuth><ProfilePage /></CheckAuth>} />
                 </Routes>
             </BrowserRouter>
         </React.Suspense>
