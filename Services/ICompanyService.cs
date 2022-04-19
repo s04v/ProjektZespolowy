@@ -11,7 +11,7 @@ namespace FindJobWebApi.Services
 
         public void SubscribeCompany();
 
-        public void GetCompanies();
+        public IEnumerable<CompanyDTO> GetCompanies();
 
         public void GetVacanciesByCompany();
 

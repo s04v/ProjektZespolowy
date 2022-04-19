@@ -92,6 +92,8 @@ namespace FindJobWebApi.Controllers
             if (id < 1) return BadRequest(ResponseConvertor.GetResult("error", "impossible Id value"));
 
             var company = _service.GetCompanyById(id);
+            if (company == null) return BadRequest(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+            
             return Ok(ResponseConvertor.GetResult("OK", company));
         }
         #endregion
@@ -100,7 +102,10 @@ namespace FindJobWebApi.Controllers
         [HttpGet("list")]
         public async Task<ActionResult<string>> GetAllCompanies()
         {
-            return "GetAllCompaies";
+            var companies = _service.GetCompanies();
+            if (companies == null) return BadRequest(ResponseConvertor.GetResult("error", "There aren't found companies"));
+
+            return Ok(ResponseConvertor.GetResult("OK", companies));
         }
         #endregion
 
