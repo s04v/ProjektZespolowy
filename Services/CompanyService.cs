@@ -26,9 +26,27 @@ namespace FindJobWebApi.Services
             throw new NotImplementedException();
         }
 
-        public void GetProfile()
+        public CompanyDTO GetCompanyById(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public CompanyDTO GetProfile(int id)
+        {
+            var company = _context.Companies.SingleOrDefault(x => x.Id == id);
+            if(company == null) return null;
+
+            var mappedCompany = _mapper.Map<CompanyDTO>(company);
+            if(!(company.CompanyAddressId == null || company.CompanyAddressId == 0))
+            {
+                var address = _context.CompanyAddresses.SingleOrDefault(x => x.Id == company.CompanyAddressId);
+                if (address != null)
+                {
+                    var mappedAddress = _mapper.Map<CompanyAddressDTO>(address);
+                    mappedCompany.CompanyAddress = mappedAddress;
+                }
+            }
+            return mappedCompany;
         }
 
         public void GetVacanciesByCompany()

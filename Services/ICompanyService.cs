@@ -1,4 +1,5 @@
 ﻿using FindJobWebApi.DTOs;
+using FindJobWebApi.Models;
 
 namespace FindJobWebApi.Services
 {
@@ -14,10 +15,12 @@ namespace FindJobWebApi.Services
 
         public void GetVacanciesByCompany();
 
-        public void GetProfile();
+        public CompanyDTO GetProfile(int id);
 
         public void AddProfile();
 
         public void UploadCompanyPhoto();
+
+        public CompanyDTO GetCompanyById(int id);
     }
 }

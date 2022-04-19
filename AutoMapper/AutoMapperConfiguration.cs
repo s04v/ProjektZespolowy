@@ -12,7 +12,9 @@ namespace FindJobWebApi.AutoMapper
                 cfg =>
                 {
                     cfg.CreateMap<CreateCompanyDTO, Company>();
+                    cfg.CreateMap<Company, CompanyDTO>();
                     cfg.CreateMap<CreateUserDTO, User>();
+                    cfg.CreateMap<CompanyAddressDTO, CompanyAddress>();
                 }
             ).CreateMapper();
         }
