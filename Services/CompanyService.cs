@@ -26,6 +26,11 @@ namespace FindJobWebApi.Services
             if (!string.IsNullOrEmpty(dto.CompanyAddressId.ToString())) company.CompanyAddressId = dto.CompanyAddressId;
             if (!string.IsNullOrEmpty(dto.Website)) company.Website = dto.Website;
 
+            if (!string.IsNullOrEmpty(dto.Password))
+            {
+                company.Password = dto.Password.getHash();
+                company.Website = dto.Website;
+            }
             return "OK";
         }
 
