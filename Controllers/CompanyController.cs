@@ -27,7 +27,7 @@ namespace FindJobWebApi.Controllers
            _tokenService = tokenService;
             _cookieService = cookieService;
         }
-
+        #region Sign In
         [AllowAnonymous]
         [HttpPost("signin")]
         public async Task<ActionResult<string>> Signin([FromBody] LoginCompanyDTO companyDTO)
@@ -54,6 +54,7 @@ namespace FindJobWebApi.Controllers
 
             return Ok(ResponseConvertor.GetResult("OK", token));    
         }
+        #endregion
         #region SignUp
         [AllowAnonymous]
         [HttpPost("signup")]
@@ -75,7 +76,6 @@ namespace FindJobWebApi.Controllers
             return Ok(ResponseConvertor.GetResult("OK", result));
         }
         #endregion
-
         #region Subscribe
         [HttpPost("{id}/subscribe")]
         public async Task<ActionResult<string>> SubscribeToNewVacancies([FromRoute] int id)
@@ -84,7 +84,6 @@ namespace FindJobWebApi.Controllers
             return "SubscribeToNewVacancies";
         }
         #endregion
-
         #region Get Company By ID
         [HttpGet("{id}")]
         public async Task<ActionResult<CompanyDTO>> GetCompanyById([FromRoute] int id)
@@ -97,10 +96,9 @@ namespace FindJobWebApi.Controllers
             return Ok(ResponseConvertor.GetResult("OK", company));
         }
         #endregion
-
         #region Get Companies
         [HttpGet("list")]
-        public async Task<ActionResult<string>> GetAllCompanies()
+        public async Task<ActionResult<IEnumerable<CompanyDTO>>> GetAllCompanies()
         {
             var companies = _service.GetCompanies();
             if (companies == null) return BadRequest(ResponseConvertor.GetResult("error", "There aren't found companies"));
