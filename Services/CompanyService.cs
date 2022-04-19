@@ -16,9 +16,17 @@ namespace FindJobWebApi.Services
             _mapper = mapper;
 
         }
-        public void AddProfile()
+        public string AddProfile(int id,ModifyCompanyDTO dto)
         {
-            throw new NotImplementedException();
+            var company = _context.Companies.SingleOrDefault(x => x.Id == id);
+            if (company == null) return "Error";
+
+            if(!string.IsNullOrEmpty(dto.Desciption)) company.Desciption = dto.Desciption;
+            if(!string.IsNullOrEmpty(dto.CompanyName)) company.CompanyName = dto.CompanyName;
+            if (!string.IsNullOrEmpty(dto.CompanyAddressId.ToString())) company.CompanyAddressId = dto.CompanyAddressId;
+            if (!string.IsNullOrEmpty(dto.Website)) company.Website = dto.Website;
+
+            return "OK";
         }
 
         public IEnumerable<CompanyDTO> GetCompanies()

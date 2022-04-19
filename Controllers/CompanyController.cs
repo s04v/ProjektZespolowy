@@ -138,9 +138,21 @@ namespace FindJobWebApi.Controllers
 
         #region Add Data About Profile
         [HttpPost("profile")]
-        public async Task<ActionResult<string>> AddDataAboutCompany()
+        public async Task<ActionResult<string>> AddDataAboutCompany(ModifyCompanyDTO dto)
         {
-            return "AddDataAboutCompany";
+            var currentProfile = User.Identity?.Name;
+            if (string.IsNullOrEmpty(currentProfile?.ToString()))
+            {
+                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
+            }
+
+            var currentId = currentProfile.ToString().parseToken();
+
+            var result = _service.AddProfile(currentId, dto);
+            if(result.Equals("Error")) return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+
+            return Ok(ResponseConvertor.GetResult("OK", result));
+
         }
         #endregion
 
