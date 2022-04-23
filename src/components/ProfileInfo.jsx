@@ -18,12 +18,23 @@ const ProfileInfo = (props) => {
     const employerFields = [
         { id: '1', name: 'email', title: 'Email', type: 'text' },
         { id: '2', name: 'password', title: 'Password', type: 'password' },
+        { id: '3', name: 'name', title: 'Company Name', type: 'text' },
+        { id: '4', name: 'location', title: 'Location', type: 'text' },
+
     ]
+
+    const [Fields, setFields] = useState([]);
     const [data, setData] = useState({});
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        console.log(props);
+        setFields(
+            (props.role == 'Company')? 
+                employerFields 
+                : 
+                employeeFields
+        );
+        //console.log(props.role);
     },[]);
 
     const onChange = (e) => {
@@ -43,11 +54,13 @@ const ProfileInfo = (props) => {
     return (
         <div className={`${style.profileInfo} ${isOpen ? style.isOpen : ''}`}>
             <div className={`${style.fieldsList} ${isOpen ? style.hideItems : ''}`}>
-                {employeeFields.map((item) =>
+                {Fields.map((item) =>
                     <div key={item.id} className={style.field}>
                         <p>{item.title}:</p>
-                        <input onBlur={onBlur} autoComplete={"qwe"} name={item.name} type={item.type} onChange={onChange}/>
-                        <AiOutlineEdit size={16} />
+                        <div className={style.inputEdit}>
+                            <input onBlur={onBlur} autoComplete={"qwe"} name={item.name} type={item.type} onChange={onChange}/>
+                            <AiOutlineEdit size={16} />
+                        </div>
                     </div>
                 )}
             </div>

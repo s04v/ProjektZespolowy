@@ -3,8 +3,8 @@ import Header from "../components/Header";
 import Background from "../components/Background";
 import Footer from "../components/Footer";
 import style from '../styles/pages/EmployeeProfilePage.scss';
-import ProfileInfo from "../components/ProfileInfo";
 import EmployeePage from "./EmployeePage";
+import EmployerPage from "./EmployerPage";
 import {connect} from "react-redux";
 
 const ProfilePage = (props) => {
@@ -15,7 +15,7 @@ const ProfilePage = (props) => {
             <div className="main-block">
                 <div className="profile">
                     {
-                        props.role == 'Company' ? <>todo</>: <EmployeePage />
+                        props.role == 'Company' ? <EmployerPage />: <EmployeePage />
                     }
 
                 </div>

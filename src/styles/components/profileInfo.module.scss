@@ -1,12 +1,12 @@
 @import "../colors";
 
-input:focus{
+input:focus {
   outline: none;
 }
 
 .profileInfo {
   background-color: $clr-blue-prim;
-  width: 55%;
+  width: 60%;
   padding: 15px;
   border-radius: 15px;
   font-family: 'Roboto';
@@ -18,26 +18,33 @@ input:focus{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+
     .field {
       font-size: 14px;
-      justify-content: right;
+      justify-content: space-between;
       display: flex;
+      flex-wrap: nowrap;
       align-items: center;
       color: white;
       width: 50%;
 
-      input {
-        color: white;
-        margin-left: 10px;
-        margin-right: 10px;
-        background-color: transparent;
-        border: 0;
-        font-size: 16px;
+      .inputEdit {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 10px;
 
-        &:focus {
-          background-color: white;
-          color: black;
+        input {
+          width: 90%;
+          color: white;
+          background-color: transparent;
+          border: 0;
+          font-size: 16px;
 
+          &:focus {
+            background-color: white;
+            color: black;
+
+          }
         }
       }
 
@@ -51,48 +58,53 @@ input:focus{
   .closeButton {
     display: none;
   }
-  .hideItems {
-    display: none;
-  }
-
-  .isOpen {
-    height: 20px;
-  }
 }
 
 
 @media only screen and (max-width: 1200px) {
 
-  .field {
-    input {
-      width: 40%;
-    }
+  .profileInfo {
+    width: 80%;
   }
 }
 
 @media only screen and (max-width: 700px) {
 
-  .profileInfo
-  {
+  .profileInfo {
     width: 85%;
 
     .fieldsList {
       flex-direction: column;
       align-items: end;
       width: 100%;
+
       .field {
+        flex-direction: column;
+        align-items: flex-start;
         width: 100%;
-        input {
-          width: 80%;
+
+        .inputEdit {
+          margin: 10px 0;
+          width: 100%;
         }
       }
     }
+
     .closeButton {
       cursor: pointer;
       display: block;
       text-align: center;
+      margin: 5px 0;
     }
+
+    .isOpen {
+      height: 20px;
+    }
+
+    .hideItems {
+      display: none;
+    }
+
   }
 
 }
-
