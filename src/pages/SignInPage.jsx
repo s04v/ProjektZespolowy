@@ -9,6 +9,7 @@ import {useEffect} from "react";
 import UserApi from "../api/UserApi";
 import CompanyApi from "../api/CompanyApi";
 import Cookies from "universal-cookie";
+import style from "../styles/pages/signPage.scss"
 
 const SignInPage = (props) => {
     const fields = [

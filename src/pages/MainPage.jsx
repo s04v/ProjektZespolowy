@@ -8,6 +8,7 @@ import { useState } from "react";
 import Background from '../components/Background';
 import {switchTab} from "../actions/MainActions";
 import {connect} from "react-redux";
+import style from '../styles/pages/mainPage.scss'
 
 const MainPage = (props) => {
 

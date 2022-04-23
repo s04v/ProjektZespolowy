@@ -8,6 +8,7 @@ import { setError, setErrorText } from '../actions/MainActions';
 import { connect } from 'react-redux';
 import UserApi from "../api/UserApi";
 import CompanyApi from "../api/CompanyApi";
+import style from "../styles/pages/signPage.scss"
 
 
 const SignUpPage = (props) => {

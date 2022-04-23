@@ -1,0 +1,115 @@
+@import '../colors.scss';
+@import '../fonts.scss';
+
+
+.offerChanger {
+  width: 80%;
+  border: 1px $clr-blue-sec solid;
+  border-radius: 50px;
+  margin: 10px auto;
+
+  .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+    border-radius: 50px;
+    transition: background-color 100ms ease-in-out;
+
+    &:hover {
+      background-color: $clr-blue-prim;
+
+      svg {
+        color: white;
+      }
+    }
+
+    h2 {
+      font-size: 1.5em;
+    }
+    svg {
+      color: $clr-blue-prim;
+      transition: color 100ms ease-in-out;
+    }
+  }
+  
+
+  .hidden {
+    display: none;
+  }
+}
+
+.opened {
+  background-color: $clr-blue-sec;
+  border-radius: 50px 50px 0 0 !important;
+}
+
+:global .form-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  border-radius: 0 0 50px 50px;
+  background-color: $clr-white-gray;
+
+  h1 {
+    display: none;
+  }
+  .hidden {
+    display: none;
+  }
+
+  .error {
+    display: block;
+    background-color: $clr-error;
+    color: $clr-white;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  button {
+    align-self: end;
+  }
+
+  h1 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 42px;
+    margin-bottom: 35px;
+    align-self: start;
+  }
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    align-items: center;
+
+    @media (max-width: 500px) {
+      flex-direction: column; 
+      p {
+        align-self: start;
+        padding-left: 2px;
+      }
+
+    }
+    p {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    input {
+      max-width: 280px;
+      width: 100%;
+      font-size: 16px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      outline-style: none;
+      border: 1px solid $clr-blue-prim;
+    }
+  }
+}
