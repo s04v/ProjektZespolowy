@@ -4,11 +4,11 @@ namespace FindJobWebApi.JWTLogic
 {
     public static class JWTParser
     {
-        public static ulong parseToken(this string token)
+        public static int parseToken(this string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = tokenHandler.ReadJwtToken(token).Claims.ToList();
-            return ulong.Parse(claims[2].Value);
+            return Int32.Parse(claims[2].Value);
         }
     }
 }

@@ -5,14 +5,14 @@ namespace FindJobWebApi.Models
     public class User
     {
         
-        public ulong Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
         public DateTime? BirthdayDate { get; set; } =default(DateTime?);
         public string? ContactNumber { get; set; }= string.Empty;
-        public ulong? UserAddressId { get; set; }
+        public int? UserAddressId { get; set; }
         public virtual UserAddress UserAddress { get; set; }
         public string? Gender { get; set; } = string.Empty;
         public float? Experience { get; set; } = default(float);

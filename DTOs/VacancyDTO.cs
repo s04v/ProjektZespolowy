@@ -2,7 +2,7 @@
 {
     public class VacancyDTO
     {
-        public ulong Id { get; set; }
+        public int Id { get; set; }
         public CompanyDTO Company { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

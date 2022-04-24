@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -13,7 +14,8 @@ namespace FindJobWebApi.Migrations
                 name: "CompanyAddresses",
                 columns: table => new
                 {
-                    Id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Country = table.Column<string>(type: "text", nullable: true),
                     City = table.Column<string>(type: "text", nullable: true),
                     AddressFirst = table.Column<string>(type: "text", nullable: true),
@@ -29,7 +31,8 @@ namespace FindJobWebApi.Migrations
                 name: "UserAddresses",
                 columns: table => new
                 {
-                    Id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Country = table.Column<string>(type: "text", nullable: true),
                     City = table.Column<string>(type: "text", nullable: true),
                     AddressFirst = table.Column<string>(type: "text", nullable: true),
@@ -45,9 +48,10 @@ namespace FindJobWebApi.Migrations
                 name: "Companies",
                 columns: table => new
                 {
-                    Id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CompanyName = table.Column<string>(type: "text", nullable: false),
-                    CompanyAddressId = table.Column<decimal>(type: "numeric(20,0)", nullable: true),
+                    CompanyAddressId = table.Column<int>(type: "integer", nullable: true),
                     Website = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
@@ -67,12 +71,13 @@ namespace FindJobWebApi.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     BirthdayDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ContactNumber = table.Column<string>(type: "text", nullable: true),
-                    UserAddressId = table.Column<decimal>(type: "numeric(20,0)", nullable: true),
+                    UserAddressId = table.Column<int>(type: "integer", nullable: true),
                     Gender = table.Column<string>(type: "text", nullable: true),
                     Experience = table.Column<float>(type: "real", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: false),
@@ -93,8 +98,9 @@ namespace FindJobWebApi.Migrations
                 name: "Vacancies",
                 columns: table => new
                 {
-                    Id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
-                    CompanyId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Requirements = table.Column<string>(type: "text", nullable: false),
@@ -117,9 +123,10 @@ namespace FindJobWebApi.Migrations
                 name: "Candidtates",
                 columns: table => new
                 {
-                    Id = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
-                    VacancyId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
-                    UserId = table.Column<decimal>(type: "numeric(20,0)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    VacancyId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

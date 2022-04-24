@@ -4,7 +4,7 @@ namespace FindJobWebApi.DTOs
 {
     public class CompanyDTO
     {
-        public ulong Id { get; set; }
+        public int Id { get; set; }
         public string CompanyName { get; set; }
         public CompanyAddressDTO CompanyAddress { get; set; }
         public string Website { get; set; }

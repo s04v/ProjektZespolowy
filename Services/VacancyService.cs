@@ -45,7 +45,7 @@ namespace FindJobWebApi.Services
             return "OK";
         }
 
-        public string ModifyVacancy(ulong id, CreateVacancyDTO vacancyDTO)
+        public string ModifyVacancy(int id, CreateVacancyDTO vacancyDTO)
         {
             var vacancy = _context.Vacancies.SingleOrDefault(x => x.Id == id);
             if (vacancy == null) 
