@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const Api = axios.create({
-    baseURL: 'https://localhost:7253/',
+    baseURL: 'https://pz-api-findjob.herokuapp.com/',
     timeout: 1000,
     withCredentials: true,
 });
