@@ -1,4 +1,5 @@
 ﻿using FindJobWebApi.DTOs;
+using FindJobWebApi.JWTLogic;
 using FindJobWebApi.Response;
 using FindJobWebApi.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,26 @@ namespace FindJobWebApi.Controllers
 
             if (!result.Equals("OK")) 
                 return Conflict(ResponseConvertor.GetResult("error", result));
+
+            return Ok(ResponseConvertor.GetResult("OK", result));
+        }
+
+        [HttpPost("modify")]
+        public async Task<ActionResult<string>> ModifyJob([FromBody] CreateVacancyDTO vacancyDTO)
+        {
+            var currentProfile = User.Identity?.Name;
+            if (string.IsNullOrEmpty(currentProfile?.ToString()))
+            {
+                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
+            }
+
+            var currentId = currentProfile.ToString().parseToken();
+
+            var result = "";
+
+            /*var result = _service.AddProfile(currentId, dto);
+            if (result.Equals("Error")) 
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));*/
 
             return Ok(ResponseConvertor.GetResult("OK", result));
         }
