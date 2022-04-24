@@ -7,5 +7,7 @@ namespace FindJobWebApi.Services
         public string SignIn(LoginUserDTO userDTO);
 
         public string SignUp(CreateUserDTO userDTO);
+
+        public UserDTO GetUser(int id);
     }
 }
