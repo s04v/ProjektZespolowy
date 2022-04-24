@@ -4,8 +4,7 @@ namespace FindJobWebApi.DTOs
 {
     public class CreateVacancyDTO
     {
-        [Required]
-        public CompanyDTO Company { get; set; }
+        public int CompanyId { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
