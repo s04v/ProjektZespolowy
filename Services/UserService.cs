@@ -42,5 +42,26 @@ namespace FindJobWebApi.Services
             _context.SaveChanges();
             return "OK";
         }
+
+        public UserDTO GetUser(int id)
+        {
+            var user = _context.Users.SingleOrDefault(x => x.Id == id);
+
+            if (user == null) return null;
+
+            var mappedUser = _mapper.Map<UserDTO>(user);
+
+            if (!(user.UserAddressId == null || user.UserAddressId == 0))
+            {
+                var address = _context.UserAddresses.SingleOrDefault(x => x.Id == user.UserAddressId);
+                if (address != null)
+                {
+                    var mappedAddress = _mapper.Map<UserAddressDTO>(address);
+                    mappedUser.UserAddress = mappedAddress;
+                }
+            }
+
+            return mappedUser;
+        }
     }
 }
