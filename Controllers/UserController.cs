@@ -1,4 +1,5 @@
 ﻿using FindJobWebApi.DTOs;
+using FindJobWebApi.JWTLogic;
 using FindJobWebApi.Response;
 using FindJobWebApi.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -86,7 +87,39 @@ namespace FindJobWebApi.Controllers
         [HttpGet("profile")]
         public async Task<ActionResult<string>> GetUserProfile()
         {
-            return "User Profile";
+            var currentUser = User.Identity;
+
+            if (currentUser == null)
+                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
+
+#pragma warning disable CS8604
+            var userId = currentUser.Name.parseToken();
+#pragma warning restore CS8604
+
+            var user = _service.GetUser(userId);
+
+            if(user == null)
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by user ID"));
+
+            return Ok(ResponseConvertor.GetResult("OK", user));
+        }
+        [HttpPost("profile")]
+        public async Task<ActionResult<string>> AddUserData(ModifyUserDTO dto)
+        {
+            var currentUser = User.Identity;
+
+            if (currentUser == null)
+                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
+
+            var currentId = currentUser.Name.parseToken();
+
+            var result = _service.AddProfile(currentId, dto);
+
+            if (result.Equals("Error")) 
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+
+            return Ok(ResponseConvertor.GetResult("OK", result));
+
         }
         [HttpGet("profile/cv/create")]
         public async Task<ActionResult<string>> CreateCVForUser()

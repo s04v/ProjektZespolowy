@@ -42,5 +42,45 @@ namespace FindJobWebApi.Services
             _context.SaveChanges();
             return "OK";
         }
+
+        public UserDTO GetUser(int id)
+        {
+            var user = _context.Users.SingleOrDefault(x => x.Id == id);
+
+            if (user == null) return null;
+
+            var mappedUser = _mapper.Map<UserDTO>(user);
+
+            if (!(user.UserAddressId == null || user.UserAddressId == 0))
+            {
+                var address = _context.UserAddresses.SingleOrDefault(x => x.Id == user.UserAddressId);
+                if (address != null)
+                {
+                    var mappedAddress = _mapper.Map<UserAddressDTO>(address);
+                    mappedUser.UserAddress = mappedAddress;
+                }
+            }
+
+            return mappedUser;
+        }
+
+        public string AddProfile(int id, ModifyUserDTO dto)
+        {
+            var user = _context.Users.SingleOrDefault(x => x.Id == id);
+            if (user == null) 
+                return "Error";
+
+            if (!string.IsNullOrEmpty(dto.FirstName)) user.FirstName = dto.FirstName;
+            if (!string.IsNullOrEmpty(dto.LastName)) user.LastName = dto.LastName;
+            if (!string.IsNullOrEmpty(dto.BirthdayDate.ToString())) user.BirthdayDate = dto.BirthdayDate;
+            if (!string.IsNullOrEmpty(dto.ContactNumber)) user.ContactNumber = dto.ContactNumber;
+            if (!string.IsNullOrEmpty(dto.UserAddressId.ToString())) user.UserAddressId = dto.UserAddressId;
+            if (!string.IsNullOrEmpty(dto.Gender)) user.Gender = dto.Gender;
+            if (!string.IsNullOrEmpty(dto.Experience.ToString())) user.Experience = dto.Experience;
+            if (!string.IsNullOrEmpty(dto.Password)) user.Password = dto.Password.getHash();
+            if (!string.IsNullOrEmpty(dto.Desciption)) user.Desciption = dto.Desciption;
+
+            return "OK";
+        }
     }
 }
