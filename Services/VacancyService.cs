@@ -44,5 +44,22 @@ namespace FindJobWebApi.Services
 
             return "OK";
         }
+
+        public string ModifyVacancy(ulong id, CreateVacancyDTO vacancyDTO)
+        {
+            var vacancy = _context.Vacancies.SingleOrDefault(x => x.Id == id);
+            if (vacancy == null) 
+                return "Error";
+
+            if (!string.IsNullOrEmpty(vacancyDTO.Title)) vacancy.Title = vacancyDTO.Title;
+            if (!string.IsNullOrEmpty(vacancyDTO.Description)) vacancy.Description = vacancyDTO.Description;
+            if (!string.IsNullOrEmpty(vacancyDTO.Requirements)) vacancy.Requirements = vacancyDTO.Requirements;
+            if (!string.IsNullOrEmpty(vacancyDTO.Responsibilities)) vacancy.Responsibilities = vacancyDTO.Responsibilities;
+            if (!string.IsNullOrEmpty(vacancyDTO.Salary.ToString())) vacancy.Salary = vacancyDTO.Salary;
+
+            vacancy.UpdateTime = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+
+            return "OK";
+        }
     }
 }

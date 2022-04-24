@@ -53,11 +53,9 @@ namespace FindJobWebApi.Controllers
 
             var currentId = currentProfile.ToString().parseToken();
 
-            var result = "";
-
-            /*var result = _service.AddProfile(currentId, dto);
+            var result = _service.ModifyVacancy((ulong)currentId, vacancyDTO);
             if (result.Equals("Error")) 
-                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));*/
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
 
             return Ok(ResponseConvertor.GetResult("OK", result));
         }
