@@ -111,7 +111,14 @@ namespace FindJobWebApi.Controllers
         [HttpGet("{id}/job")]
         public async Task<ActionResult<string>> ListOfVacanciesOfCompany([FromRoute] int id)
         {
-            return "ListOfVacanciesOfCompany";
+            var company = _service.GetCompanyById(id);
+
+            if (company == null) 
+                return BadRequest(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+
+            var vacancies = _service.GetVacanciesByCompany(id);
+            
+            return Ok(ResponseConvertor.GetResult("OK", vacancies));
         }
         #endregion
 
