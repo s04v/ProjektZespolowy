@@ -18,9 +18,26 @@ namespace FindJobWebApi.Services
 
         public string AddNewVacancy(CreateVacancyDTO vacancyDTO)
         {
-            var currentVacancy = _mapper.Map<Vacancy>(vacancyDTO);
+            //var currentVacancy = _mapper.Map<Vacancy>(vacancyDTO);
 
-            currentVacancy.UpdateTime = DateTime.Now;
+            var currentVacancy = new Vacancy();
+
+            currentVacancy.Id = _context.Vacancies.Count() > 0 ? _context.Vacancies.Max(x => x.Id) + 1 : 1;
+
+            currentVacancy.CompanyId = vacancyDTO.CompanyId;
+
+            var company = _context.Companies.FirstOrDefault(x => x.Id == vacancyDTO.CompanyId);
+            if (company == null)
+                return "error";
+
+            currentVacancy.Company = company;
+
+            currentVacancy.Title = vacancyDTO.Title;
+            currentVacancy.Description = vacancyDTO.Description;
+            currentVacancy.Requirements =  vacancyDTO.Requirements;
+            currentVacancy.Responsibilities = vacancyDTO.Responsibilities;
+
+            currentVacancy.UpdateTime = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
 
             _context.Vacancies.Add(currentVacancy);
             _context.SaveChanges();
