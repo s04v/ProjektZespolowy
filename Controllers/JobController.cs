@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FindJobWebApi.DTOs;
+using FindJobWebApi.Response;
+using FindJobWebApi.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobWebApi.Controllers
 {
@@ -6,6 +9,39 @@ namespace FindJobWebApi.Controllers
     [Route("api/job")]
     public class JobController : ControllerBase
     {
+        private readonly IVacancyService _service;
+        private readonly ITokenService _tokenService;
+
+        private readonly ICookieService _cookieService;
+
+        public JobController(IVacancyService service, ITokenService tokenService, ICookieService cookieService)
+        {
+            _service = service;
+            _tokenService = tokenService;
+            _cookieService = cookieService;
+        }
+
+        [HttpPost("add")]
+        public async Task<ActionResult<string>> AddNewJob([FromBody]CreateVacancyDTO vacancyDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y => y.Count > 0)
+                           .ToList();
+
+                return BadRequest(ResponseConvertor.GetResult("error", errors));
+            }
+
+            var result = _service.AddNewVacancy(vacancyDTO);
+
+            if (!result.Equals("OK")) 
+                return Conflict(ResponseConvertor.GetResult("error", result));
+
+            return Ok(ResponseConvertor.GetResult("OK", result));
+        }
+
+        #region InProgress
         [HttpGet("{id}")]
         public async Task<ActionResult<string>> GetJobById([FromRoute] int id)
         {
@@ -21,10 +57,6 @@ namespace FindJobWebApi.Controllers
         {
             return "ApplyJob";
         }
-        [HttpPost("add")]
-        public async Task<ActionResult<string>> AddNewJob()
-        {
-            return "AddNewJob";
-        }
+        #endregion
     }
 }
