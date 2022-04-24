@@ -91,7 +91,7 @@ namespace FindJobWebApi.Services
             return mappedCompany;
         }
 
-        public void GetVacanciesByCompany()
+        public IEnumerable<VacancyDTO> GetVacanciesByCompany(int id)
         {
             throw new NotImplementedException();
         }

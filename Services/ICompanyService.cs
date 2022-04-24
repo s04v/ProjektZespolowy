@@ -13,7 +13,7 @@ namespace FindJobWebApi.Services
 
         public IEnumerable<CompanyDTO> GetCompanies();
 
-        public void GetVacanciesByCompany();
+        public IEnumerable<VacancyDTO> GetVacanciesByCompany(int id);
 
         public CompanyDTO GetProfile(int id);
 
