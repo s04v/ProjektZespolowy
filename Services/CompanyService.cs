@@ -16,7 +16,7 @@ namespace FindJobWebApi.Services
             _mapper = mapper;
 
         }
-        public string AddProfile(int id,ModifyCompanyDTO dto)
+        public string AddProfile(ulong id,ModifyCompanyDTO dto)
         {
             var company = _context.Companies.SingleOrDefault(x => x.Id == id);
             if (company == null) return "Error";
@@ -55,7 +55,7 @@ namespace FindJobWebApi.Services
             return mappedCompanies;
         }
 
-        public CompanyDTO GetCompanyById(int id)
+        public CompanyDTO GetCompanyById(ulong id)
         {
             var company = _context.Companies.SingleOrDefault(x => x.Id == id);
             if (company == null) return null;
@@ -73,7 +73,7 @@ namespace FindJobWebApi.Services
             return mappedCompany;
         }
 
-        public CompanyDTO GetProfile(int id)
+        public CompanyDTO GetProfile(ulong id)
         {
             var company = _context.Companies.SingleOrDefault(x => x.Id == id);
             if(company == null) return null;
@@ -91,7 +91,7 @@ namespace FindJobWebApi.Services
             return mappedCompany;
         }
 
-        public IEnumerable<VacancyDTO> GetVacanciesByCompany(int id)
+        public IEnumerable<VacancyDTO> GetVacanciesByCompany(ulong id)
         {
             var vacancies = _context.Vacancies.Where<Vacancy>(x => x.CompanyId == id);
             var mappedVacancies = _mapper.Map<List<VacancyDTO>>(vacancies);

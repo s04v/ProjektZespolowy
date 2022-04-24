@@ -5,7 +5,7 @@ namespace FindJobWebApi.Models
     public class UserAddress 
     {
         
-        public int Id { get; set; }
+        public ulong Id { get; set; }
         public string? Country { get; set; } = string.Empty;
         public string? City { get; set; } = string.Empty;
         public string? AddressFirst { get; set; } = string.Empty;

@@ -86,7 +86,7 @@ namespace FindJobWebApi.Controllers
         #endregion
         #region Get Company By ID
         [HttpGet("{id}")]
-        public async Task<ActionResult<CompanyDTO>> GetCompanyById([FromRoute] int id)
+        public async Task<ActionResult<CompanyDTO>> GetCompanyById([FromRoute] ulong id)
         {
             if (id < 1) return BadRequest(ResponseConvertor.GetResult("error", "impossible Id value"));
 
@@ -109,7 +109,7 @@ namespace FindJobWebApi.Controllers
 
         #region Get List of Vacancies
         [HttpGet("{id}/job")]
-        public async Task<ActionResult<string>> ListOfVacanciesOfCompany([FromRoute] int id)
+        public async Task<ActionResult<string>> ListOfVacanciesOfCompany([FromRoute] ulong id)
         {
             var company = _service.GetCompanyById(id);
 

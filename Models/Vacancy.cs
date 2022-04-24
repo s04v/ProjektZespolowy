@@ -6,7 +6,7 @@ namespace FindJobWebApi.Models
     {
 
         public ulong Id { get; set; }
-        public int CompanyId { get; set; }
+        public ulong CompanyId { get; set; }
         public virtual Company Company { get; set; }
         [Required]
         public string Title { get; set; }

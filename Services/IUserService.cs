@@ -8,8 +8,8 @@ namespace FindJobWebApi.Services
 
         public string SignUp(CreateUserDTO userDTO);
 
-        public UserDTO GetUser(int id);
+        public UserDTO GetUser(ulong id);
 
-        public string AddProfile(int id, ModifyUserDTO dto);
+        public string AddProfile(ulong id, ModifyUserDTO dto);
     }
 }

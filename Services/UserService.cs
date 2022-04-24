@@ -43,7 +43,7 @@ namespace FindJobWebApi.Services
             return "OK";
         }
 
-        public UserDTO GetUser(int id)
+        public UserDTO GetUser(ulong id)
         {
             var user = _context.Users.SingleOrDefault(x => x.Id == id);
 
@@ -64,7 +64,7 @@ namespace FindJobWebApi.Services
             return mappedUser;
         }
 
-        public string AddProfile(int id, ModifyUserDTO dto)
+        public string AddProfile(ulong id, ModifyUserDTO dto)
         {
             var user = _context.Users.SingleOrDefault(x => x.Id == id);
             if (user == null) 

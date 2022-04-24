@@ -5,11 +5,11 @@ namespace FindJobWebApi.Models
 {
     public class Company 
     {
-        public int Id { get; set; }
+        public ulong Id { get; set; }
 
         [Required]
         public string CompanyName { get; set; } = String.Empty;
-        public int? CompanyAddressId { get; set; } 
+        public ulong? CompanyAddressId { get; set; } 
         public virtual CompanyAddress CompanyAddress { get; set; }
         public string? Website { get; set; } = string.Empty;
 

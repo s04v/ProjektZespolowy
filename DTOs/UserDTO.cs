@@ -2,7 +2,7 @@
 {
     public class UserDTO
     {
-        public int Id { get; set; }
+        public ulong Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? BirthdayDate { get; set; }
