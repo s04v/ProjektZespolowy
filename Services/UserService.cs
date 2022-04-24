@@ -63,5 +63,10 @@ namespace FindJobWebApi.Services
 
             return mappedUser;
         }
+
+        public string AddProfile(int id, ModifyUserDTO dto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
