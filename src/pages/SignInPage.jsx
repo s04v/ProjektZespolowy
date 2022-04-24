@@ -2,13 +2,14 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Background from "../components/Background";
 import SignForm from "../components/SignForm";
-import {setError, setErrorText} from "../actions/mainActions";
+import {setAuth, setError, setErrorText, setRole} from "../actions/MainActions";
 import {connect} from "react-redux";
 import { login } from "../api/UserApi";
 import {useEffect} from "react";
 import UserApi from "../api/UserApi";
 import CompanyApi from "../api/CompanyApi";
 import Cookies from "universal-cookie";
+import style from "../styles/pages/signPage.scss"
 
 const SignInPage = (props) => {
     const fields = [
@@ -31,7 +32,6 @@ const SignInPage = (props) => {
             .then((result) => {
                 console.log(result);
                     props.setError(false);
-
                     alert("jwt token - " + result.data.data);
                     const cookies = new Cookies();
                     cookies.set('jwt', result.data.data);
@@ -76,4 +76,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { setError, setErrorText })(SignInPage);
+export default connect(mapStateToProps, { setError, setErrorText, setRole })(SignInPage);

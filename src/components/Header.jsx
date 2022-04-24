@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import style from '../styles/components/header.module.scss'
 import {useState} from 'react';
 import Hamburger from './Hamburger';
+import {connect} from "react-redux";
 
 
 const Header = (props) => {
@@ -25,15 +26,26 @@ const Header = (props) => {
           <Hamburger className={style.hamburger} onClick={() => onClick(!menuOpened)} />
         </div>
         <div className={[style.header_main, menuOpened].join(" ")}>
-          <Switch onSwitch={props.onSwitch} className={style.switch}/>
-          <div className={style.buttons}>
-            <Link to='/signup'><Button text="Register"/></Link>
-            <Link to='/signin'><Button text="Sign in"/></Link>
-          </div>
+          { props.role === null ?
+              <>
+                <Switch onSwitch={props.onSwitch} className={style.switch}/>
+                <div className={style.buttons}>
+                  <Link to='/signup'><Button text="Register"/></Link>
+                  <Link to='/signin'><Button text="Sign in"/></Link>
+                </div>
+              </>
+              : <></>}
         </div>
+
       </div>
     </header>
   );
 }
 
-export default Header
+const mapStateToProps = (state) => {
+  return {
+    role: state.mainReducer.role
+  };
+}
+
+export default connect(mapStateToProps, null)(Header);

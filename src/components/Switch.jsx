@@ -1,7 +1,7 @@
 import {useState} from "react";
 import style from '../styles/components/switch.module.scss'
 import {connect} from "react-redux";
-import { switchTab } from "../actions/mainActions";
+import { switchTab } from "../actions/MainActions";
 
 
 const Switch = (props) => {
