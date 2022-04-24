@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {setRole} from "../actions/MainActions";
 import { AiOutlineEdit} from "react-icons/ai";
-
+import CompanyApi from "../api/CompanyApi";
 
 const ProfileInfo = (props) => {
     const employeeFields = [
@@ -28,6 +28,12 @@ const ProfileInfo = (props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
+        const testData = CompanyApi.getProfile()
+
+        testData.then(data => {
+            console.log(data)
+        })
+
         setFields(
             (props.role == 'Company')? 
                 employerFields 

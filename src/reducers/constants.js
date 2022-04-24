@@ -7,4 +7,9 @@ const mainTypes = {
     clear: 'MAIN/CLEAR'
 };
 
-export { mainTypes }
+const companyTypes = {
+    getProfile: 'COMPANY/GET_PROFILE',
+    getJobs: 'COMPANY/GET_JOBS'
+}
+
+export { mainTypes, companyTypes }

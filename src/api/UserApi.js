@@ -8,9 +8,14 @@ const registerAccount = async (data) => {
     return await Api.post('/api/user/signin', data);
 }
 
+const getProfile = async () => {
+    return await Api.get('/api/user/profile');
+}
+
 const helper = {
     registerAccount: registerAccount,
-    login: login
+    login: login,
+    getProfile: getProfile
 }
 
 export  { registerAccount, login };
