@@ -103,6 +103,24 @@ namespace FindJobWebApi.Controllers
 
             return Ok(ResponseConvertor.GetResult("OK", user));
         }
+        [HttpPost("profile")]
+        public async Task<ActionResult<string>> AddUserData(ModifyUserDTO dto)
+        {
+            var currentUser = User.Identity;
+
+            if (currentUser == null)
+                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
+
+            var currentId = currentUser.Name.parseToken();
+
+            var result = _service.AddProfile(currentId, dto);
+
+            if (result.Equals("Error")) 
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+
+            return Ok(ResponseConvertor.GetResult("OK", result));
+
+        }
         [HttpGet("profile/cv/create")]
         public async Task<ActionResult<string>> CreateCVForUser()
         {
