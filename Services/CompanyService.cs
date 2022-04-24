@@ -93,7 +93,10 @@ namespace FindJobWebApi.Services
 
         public IEnumerable<VacancyDTO> GetVacanciesByCompany(int id)
         {
-            throw new NotImplementedException();
+            var vacancies = _context.Vacancies.Where<Vacancy>(x => x.CompanyId == id);
+            var mappedVacancies = _mapper.Map<List<VacancyDTO>>(vacancies);
+
+            return mappedVacancies;
         }
 
         public string SignIn(LoginCompanyDTO companyDTO)
