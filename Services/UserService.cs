@@ -66,7 +66,21 @@ namespace FindJobWebApi.Services
 
         public string AddProfile(int id, ModifyUserDTO dto)
         {
-            throw new NotImplementedException();
+            var user = _context.Users.SingleOrDefault(x => x.Id == id);
+            if (user == null) 
+                return "Error";
+
+            if (!string.IsNullOrEmpty(dto.FirstName)) user.FirstName = dto.FirstName;
+            if (!string.IsNullOrEmpty(dto.LastName)) user.LastName = dto.LastName;
+            if (!string.IsNullOrEmpty(dto.BirthdayDate.ToString())) user.BirthdayDate = dto.BirthdayDate;
+            if (!string.IsNullOrEmpty(dto.ContactNumber)) user.ContactNumber = dto.ContactNumber;
+            if (!string.IsNullOrEmpty(dto.UserAddressId.ToString())) user.UserAddressId = dto.UserAddressId;
+            if (!string.IsNullOrEmpty(dto.Gender)) user.Gender = dto.Gender;
+            if (!string.IsNullOrEmpty(dto.Experience.ToString())) user.Experience = dto.Experience;
+            if (!string.IsNullOrEmpty(dto.Password)) user.Password = dto.Password.getHash();
+            if (!string.IsNullOrEmpty(dto.Desciption)) user.Desciption = dto.Desciption;
+
+            return "OK";
         }
     }
 }
