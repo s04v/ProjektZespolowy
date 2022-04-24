@@ -3,6 +3,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import React, { useEffect, useState } from 'react'
 import SignForm from './SignForm';
 import CompanyApi from "../api/CompanyApi";
+import OfferRow from './OfferRow';
 
 const OfferChanger = () => {
 
@@ -41,6 +42,7 @@ const OfferChanger = () => {
                     onSend={onSend}
                     buttonTitle='Save' />
             </div>
+            <OfferRow />
         </div>
     )
 }

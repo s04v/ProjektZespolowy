@@ -1,0 +1,40 @@
+@import '../fonts.scss';
+@import '../colors.scss';
+
+.offerRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: 20px 0;
+
+    .info {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 70%;
+
+        div {
+            display: contents;
+            p {
+                display: inline-block;
+            }
+            input {
+                width: 20%;
+                display: inline;
+            }
+        }
+        .hidden {
+            display: none;
+        }
+
+        .showed {
+            flex: 1 1 90%;
+            display: block;
+            padding: 10px 0;
+            p {
+                padding-right: 4px;
+            }
+        }
+    }
+}
