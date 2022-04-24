@@ -85,16 +85,14 @@ namespace FindJobWebApi.Controllers
             return "User List";
         }
         [HttpGet("profile")]
-        public async Task<ActionResult<string>> GetUserProfile()
+        public async Task<ActionResult<string>> GetUserProfile([FromHeader] string authorization)
         {
-            var currentUser = User.Identity;
+            //var currentUser = User.Identity;
 
-            if (currentUser == null)
+            if (string.IsNullOrEmpty(authorization))
                 return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
 
-#pragma warning disable CS8604
-            var userId = currentUser.Name.parseToken();
-#pragma warning restore CS8604
+            var userId = authorization.parseToken();
 
             var user = _service.GetUser(userId);
 
@@ -104,14 +102,14 @@ namespace FindJobWebApi.Controllers
             return Ok(ResponseConvertor.GetResult("OK", user));
         }
         [HttpPost("profile")]
-        public async Task<ActionResult<string>> AddUserData(ModifyUserDTO dto)
+        public async Task<ActionResult<string>> AddUserData([FromHeader] string authorization, ModifyUserDTO dto)
         {
-            var currentUser = User.Identity;
+            //var currentUser = User.Identity;
 
-            if (currentUser == null)
+            if (string.IsNullOrEmpty(authorization))
                 return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
 
-            var currentId = currentUser.Name.parseToken();
+            var currentId = authorization.parseToken();
 
             var result = _service.AddProfile(currentId, dto);
 

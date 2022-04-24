@@ -125,15 +125,14 @@ namespace FindJobWebApi.Controllers
         #region Get Profile
         [Authorize(Roles = "Company")]
         [HttpGet("profile")]
-        public async Task<ActionResult<CompanyDTO>> GetCompanyProfile()
+        public async Task<ActionResult<CompanyDTO>> GetCompanyProfile([FromHeader] string authorization)
         {
-            var currentProfile = User.Identity?.Name;
-            if(string.IsNullOrEmpty(currentProfile?.ToString()))
+            if(string.IsNullOrEmpty(authorization))
             {
                 return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
             }
 
-            var currentId = currentProfile.ToString().parseToken();
+            var currentId = authorization.parseToken();
             var company = _service.GetProfile(currentId);
             if(company == null)
             {
@@ -145,15 +144,15 @@ namespace FindJobWebApi.Controllers
 
         #region Add Data About Profile
         [HttpPost("profile")]
-        public async Task<ActionResult<string>> AddDataAboutCompany(ModifyCompanyDTO dto)
+        public async Task<ActionResult<string>> AddDataAboutCompany([FromHeader]string authorization, ModifyCompanyDTO dto)
         {
-            var currentProfile = User.Identity?.Name;
-            if (string.IsNullOrEmpty(currentProfile?.ToString()))
+            //var currentProfile = User.Identity?.Name;
+            if (string.IsNullOrEmpty(authorization))
             {
                 return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
             }
 
-            var currentId = currentProfile.ToString().parseToken();
+            var currentId = authorization.parseToken();
 
             var result = _service.AddProfile(currentId, dto);
             if(result.Equals("Error")) return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
