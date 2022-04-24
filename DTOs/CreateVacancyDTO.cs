@@ -16,7 +16,5 @@ namespace FindJobWebApi.DTOs
         public string Responsibilities { get; set; }
         [Required]
         public decimal Salary { get; set; }
-        [Required]
-        public DateTime UpdateTime { get; set; }
     }
 }
