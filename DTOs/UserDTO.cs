@@ -1,6 +1,6 @@
 ﻿namespace FindJobWebApi.DTOs
 {
-    public class UserDTOcs
+    public class UserDTO
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
