@@ -9,6 +9,13 @@
   margin: 10px auto;
 
   .header {
+
+    &.no_rows {
+      border-radius: 0;
+      border-top-left-radius: 50px;
+      border-top-right-radius: 50px;
+    }
+
     display: flex;
     flex-direction: row;
     align-items: center;

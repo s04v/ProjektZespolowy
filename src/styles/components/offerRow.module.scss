@@ -2,10 +2,16 @@
 @import '../colors.scss';
 
 .offerRow {
+    &:last-of-type {
+        border-bottom-left-radius: 50px;
+        border-bottom-right-radius: 50px;
+    }
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    margin: 20px 0;
+    padding: 20px 0;
+    border-top: 1px solid $clr-blue-sec;
+    background-color: $clr-white-gray;
 
     .info {
         display: flex;
@@ -18,10 +24,20 @@
             display: contents;
             p {
                 display: inline-block;
+                font-weight: 600;
             }
             input {
                 width: 20%;
                 display: inline;
+                border: 0;
+                background-color: transparent;
+                color: gray;
+
+                &:focus {
+                    color: black;
+                    background-color: white;
+                    border: 1px solid black;
+                }
             }
         }
         .hidden {

@@ -32,7 +32,7 @@ const OfferChanger = () => {
     ]
     return (
         <div className={style.offerChanger} >
-            <div className={[style.header, opened].join(" ")}  >
+            <div className={[style.header, style.no_rows, opened].join(" ")}  >
                 <h2>Job offers</h2>
                 <AiOutlinePlus size={50} onClick={() => setOfferFields(!offerFields)}/>
             </div>
@@ -42,6 +42,9 @@ const OfferChanger = () => {
                     onSend={onSend}
                     buttonTitle='Save' />
             </div>
+            <OfferRow />
+            <OfferRow />
+            <OfferRow />
             <OfferRow />
         </div>
     )
