@@ -3,10 +3,13 @@ using FindJobWebApi.AutoMapper;
 using FindJobWebApi.DataBase;
 using FindJobWebApi.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,12 +26,25 @@ var key = Encoding.ASCII.GetBytes(appSettings.SecretKey);
 //builder.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme);
 //builder.Services.AddAuthentication(options =>
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
-/*    .AddCookie("Cookie", config =>
+
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddCookie("Cookie", config =>
 {
     config.LoginPath = "/company/signin";
     config.AccessDeniedPath = "/company/signin"; // temporary
-});*/
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+            .GetBytes(builder.Configuration.GetSection("JWTSettings:SecretKey").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
 
 builder.Services.AddAuthorization(conf =>
 {
@@ -48,7 +64,7 @@ builder.Services.AddCors(options =>
 {
     // need to be changed to .AddPolicy with name
     // and then use [EnableCors("Policy")]
-    options.AddDefaultPolicy(policy => 
+    options.AddDefaultPolicy(policy =>
         {
             policy.WithOrigins("http://localhost:3000",
             "https://pz-findjob.herokuapp.com")
@@ -69,7 +85,18 @@ builder.Services.AddScoped<ICookieService, CookieService>();
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "bearer {token}",
+        In = ParameterLocation.Header,
+        Name = "Autthorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
 
 
 
