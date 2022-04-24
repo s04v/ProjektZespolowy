@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Newtonsoft.Json.Serialization;
 using FindJobWebApi.Response;
+using FindJobWebApi.JWTLogic;
 
 namespace FindJobWebApi.Controllers
 {
@@ -26,7 +27,7 @@ namespace FindJobWebApi.Controllers
            _tokenService = tokenService;
             _cookieService = cookieService;
         }
-
+        #region Sign In
         [AllowAnonymous]
         [HttpPost("signin")]
         public async Task<ActionResult<string>> Signin([FromBody] LoginCompanyDTO companyDTO)
@@ -53,7 +54,8 @@ namespace FindJobWebApi.Controllers
 
             return Ok(ResponseConvertor.GetResult("OK", token));    
         }
-
+        #endregion
+        #region SignUp
         [AllowAnonymous]
         [HttpPost("signup")]
         public async Task<ActionResult<string>> SignUp([FromBody] CreateCompanyDTO companyDTO)
@@ -73,45 +75,100 @@ namespace FindJobWebApi.Controllers
             
             return Ok(ResponseConvertor.GetResult("OK", result));
         }
-
+        #endregion
+        #region Subscribe
         [HttpPost("{id}/subscribe")]
         public async Task<ActionResult<string>> SubscribeToNewVacancies([FromRoute] int id)
         {
             
             return "SubscribeToNewVacancies";
         }
+        #endregion
+        #region Get Company By ID
         [HttpGet("{id}")]
-        public async Task<ActionResult<string>> GetCompanyById([FromRoute] int id)
+        public async Task<ActionResult<CompanyDTO>> GetCompanyById([FromRoute] int id)
         {
-            return $"GetCompanyById : {id}";
+            if (id < 1) return BadRequest(ResponseConvertor.GetResult("error", "impossible Id value"));
+
+            var company = _service.GetCompanyById(id);
+            if (company == null) return BadRequest(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+            
+            return Ok(ResponseConvertor.GetResult("OK", company));
         }
+        #endregion
+        #region Get Companies
         [HttpGet("list")]
-        public async Task<ActionResult<string>> GetAllCompaies()
+        public async Task<ActionResult<IEnumerable<CompanyDTO>>> GetAllCompanies()
         {
-            return "GetAllCompaies";
+            var companies = _service.GetCompanies();
+            if (companies == null) return BadRequest(ResponseConvertor.GetResult("error", "There aren't found companies"));
+
+            return Ok(ResponseConvertor.GetResult("OK", companies));
         }
+        #endregion
+
+        #region Get List of Vacancies
         [HttpGet("{id}/job")]
         public async Task<ActionResult<string>> ListOfVacanciesOfCompany([FromRoute] int id)
         {
-            return "ListOfVacanciesOfCompany";
-        }
+            var company = _service.GetCompanyById(id);
 
-        //[Authorize(Roles = "Company")]
+            if (company == null) 
+                return BadRequest(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+
+            var vacancies = _service.GetVacanciesByCompany(id);
+            
+            return Ok(ResponseConvertor.GetResult("OK", vacancies));
+        }
+        #endregion
+
+        #region Get Profile
+        [Authorize(Roles = "Company")]
         [HttpGet("profile")]
-        public async Task<ActionResult<string>> GetCompanyProfile()
+        public async Task<ActionResult<CompanyDTO>> GetCompanyProfile()
         {
-            return "GetCompanyProfile";
-        }
-        [HttpPost("profile")]
-        public async Task<ActionResult<string>> AddDataAboutCompany()
-        {
-            return "AddDataAboutCompany";
-        }
+            var currentProfile = User.Identity?.Name;
+            if(string.IsNullOrEmpty(currentProfile?.ToString()))
+            {
+                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
+            }
 
+            var currentId = currentProfile.ToString().parseToken();
+            var company = _service.GetProfile(currentId);
+            if(company == null)
+            {
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+            }
+            return Ok(ResponseConvertor.GetResult("OK", company));
+        }
+        #endregion
+
+        #region Add Data About Profile
+        [HttpPost("profile")]
+        public async Task<ActionResult<string>> AddDataAboutCompany(ModifyCompanyDTO dto)
+        {
+            var currentProfile = User.Identity?.Name;
+            if (string.IsNullOrEmpty(currentProfile?.ToString()))
+            {
+                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
+            }
+
+            var currentId = currentProfile.ToString().parseToken();
+
+            var result = _service.AddProfile(currentId, dto);
+            if(result.Equals("Error")) return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+
+            return Ok(ResponseConvertor.GetResult("OK", result));
+
+        }
+        #endregion
+
+        #region Upload Company Photo
         [HttpPut("profile/upload")]
         public async Task<ActionResult<string>> UploadCompanyPhoto()
         {
             return "UploadCompanyPhoto";
         }
+        #endregion
     }
 }

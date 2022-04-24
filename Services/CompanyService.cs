@@ -16,24 +16,87 @@ namespace FindJobWebApi.Services
             _mapper = mapper;
 
         }
-        public void AddProfile()
+        public string AddProfile(int id,ModifyCompanyDTO dto)
         {
-            throw new NotImplementedException();
+            var company = _context.Companies.SingleOrDefault(x => x.Id == id);
+            if (company == null) return "Error";
+
+            if(!string.IsNullOrEmpty(dto.Desciption)) company.Desciption = dto.Desciption;
+            if(!string.IsNullOrEmpty(dto.CompanyName)) company.CompanyName = dto.CompanyName;
+            if (!string.IsNullOrEmpty(dto.CompanyAddressId.ToString())) company.CompanyAddressId = dto.CompanyAddressId;
+            if (!string.IsNullOrEmpty(dto.Website)) company.Website = dto.Website;
+
+            if (!string.IsNullOrEmpty(dto.Password))
+            {
+                company.Password = dto.Password.getHash();
+                company.Website = dto.Website;
+            }
+            return "OK";
         }
 
-        public void GetCompanies()
+        public IEnumerable<CompanyDTO> GetCompanies()
         {
-            throw new NotImplementedException();
+            var companies = _context.Companies.ToList();
+            var mappedCompanies = _mapper.Map<List<CompanyDTO>>(companies);
+
+            for(int i = 0; i < mappedCompanies.Count; i++)
+            {
+                var company = companies[i];
+                if (!(company.CompanyAddressId == null || company.CompanyAddressId == 0))
+                {
+                    var address = _context.CompanyAddresses.SingleOrDefault(x => x.Id == company.CompanyAddressId);
+                    if (address != null)
+                    {
+                        var mappedAddress = _mapper.Map<CompanyAddressDTO>(address);
+                        mappedCompanies[i].CompanyAddress = mappedAddress;
+                    }
+                }  
+            }
+            return mappedCompanies;
         }
 
-        public void GetProfile()
+        public CompanyDTO GetCompanyById(int id)
         {
-            throw new NotImplementedException();
+            var company = _context.Companies.SingleOrDefault(x => x.Id == id);
+            if (company == null) return null;
+
+            var mappedCompany = _mapper.Map<CompanyDTO>(company);
+            if (!(company.CompanyAddressId == null || company.CompanyAddressId == 0))
+            {
+                var address = _context.CompanyAddresses.SingleOrDefault(x => x.Id == company.CompanyAddressId);
+                if (address != null)
+                {
+                    var mappedAddress = _mapper.Map<CompanyAddressDTO>(address);
+                    mappedCompany.CompanyAddress = mappedAddress;
+                }
+            }
+            return mappedCompany;
         }
 
-        public void GetVacanciesByCompany()
+        public CompanyDTO GetProfile(int id)
         {
-            throw new NotImplementedException();
+            var company = _context.Companies.SingleOrDefault(x => x.Id == id);
+            if(company == null) return null;
+
+            var mappedCompany = _mapper.Map<CompanyDTO>(company);
+            if(!(company.CompanyAddressId == null || company.CompanyAddressId == 0))
+            {
+                var address = _context.CompanyAddresses.SingleOrDefault(x => x.Id == company.CompanyAddressId);
+                if (address != null)
+                {
+                    var mappedAddress = _mapper.Map<CompanyAddressDTO>(address);
+                    mappedCompany.CompanyAddress = mappedAddress;
+                }
+            }
+            return mappedCompany;
+        }
+
+        public IEnumerable<VacancyDTO> GetVacanciesByCompany(int id)
+        {
+            var vacancies = _context.Vacancies.Where<Vacancy>(x => x.CompanyId == id);
+            var mappedVacancies = _mapper.Map<List<VacancyDTO>>(vacancies);
+
+            return mappedVacancies;
         }
 
         public string SignIn(LoginCompanyDTO companyDTO)

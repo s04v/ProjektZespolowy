@@ -1,4 +1,5 @@
 ﻿using FindJobWebApi.DTOs;
+using FindJobWebApi.Models;
 
 namespace FindJobWebApi.Services
 {
@@ -10,14 +11,16 @@ namespace FindJobWebApi.Services
 
         public void SubscribeCompany();
 
-        public void GetCompanies();
+        public IEnumerable<CompanyDTO> GetCompanies();
 
-        public void GetVacanciesByCompany();
+        public IEnumerable<VacancyDTO> GetVacanciesByCompany(int id);
 
-        public void GetProfile();
+        public CompanyDTO GetProfile(int id);
 
-        public void AddProfile();
+        public string AddProfile(int id,ModifyCompanyDTO dto);
 
         public void UploadCompanyPhoto();
+
+        public CompanyDTO GetCompanyById(int id);
     }
 }
