@@ -3,6 +3,7 @@ using FindJobWebApi.AutoMapper;
 using FindJobWebApi.DataBase;
 using FindJobWebApi.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Text;
@@ -19,13 +20,15 @@ builder.Services.Configure<JWTSettings>(jwtSection);
 var appSettings = jwtSection.Get<JWTSettings>();
 var key = Encoding.ASCII.GetBytes(appSettings.SecretKey);
 
+//builder.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme);
+//builder.Services.AddAuthentication(options =>
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie("Cookie", config =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+/*    .AddCookie("Cookie", config =>
 {
     config.LoginPath = "/company/signin";
     config.AccessDeniedPath = "/company/signin"; // temporary
-});
+});*/
 
 builder.Services.AddAuthorization(conf =>
 {
