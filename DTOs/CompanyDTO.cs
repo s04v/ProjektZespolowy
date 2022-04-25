@@ -10,6 +10,5 @@ namespace FindJobWebApi.DTOs
         public string Website { get; set; }
         public string Email { get; set; }
         public string? Desciption { get; set; }
-        public IEnumerable<VacancyDTO> Vacancies { get; set; } = null;
     }
 }
