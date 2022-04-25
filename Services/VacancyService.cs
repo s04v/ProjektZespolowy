@@ -22,7 +22,7 @@ namespace FindJobWebApi.Services
             currentVacancy.CompanyId = companyId;
             currentVacancy.Id = _context.Vacancies.ToList().OrderBy(x => x.Id).Last().Id + 1;
 
-            currentVacancy.UpdateTime = DateTime.SpecifyKind(DateTime.Now.Date + DateTime.Now.TimeOfDay, DateTimeKind.Utc);
+            currentVacancy.UpdateTime = DateTime.SpecifyKind(DateTime.Now.Date.AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second), DateTimeKind.Utc);
 
             _context.Vacancies.Add(currentVacancy);
             _context.SaveChanges();
