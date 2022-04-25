@@ -45,16 +45,16 @@ namespace FindJobWebApi.Controllers
 
         [Authorize(Roles = "Company")]
         [HttpPost("modify")]
-        public async Task<ActionResult<string>> ModifyJob([FromHeader] string authorization, [FromBody] CreateVacancyDTO vacancyDTO)
+        public async Task<ActionResult<string>> ModifyJob([FromHeader] string authorization, [FromBody] ModifyVacancyDTO vacancyDTO)
         {
             if (string.IsNullOrEmpty(authorization))
             {
                 return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
             }
 
-            var currentId = authorization.parseToken();
+            var companyId = authorization.parseToken();
 
-            var result = _service.ModifyVacancy(currentId, vacancyDTO);
+            var result = _service.ModifyVacancy(companyId, vacancyDTO);//_service.ModifyVacancy(companyId, vacancyDTO);
             if (result.Equals("Error")) 
                 return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
 

@@ -31,10 +31,10 @@ namespace FindJobWebApi.Services
             return "OK";
         }
 
-        public string ModifyVacancy(int id, CreateVacancyDTO vacancyDTO)
+        public string ModifyVacancy(int id, ModifyVacancyDTO vacancyDTO)
         {
-            var vacancy = _context.Vacancies.SingleOrDefault(x => x.Id == id);
-            if (vacancy == null) 
+            var vacancy = _context.Vacancies.SingleOrDefault(x => x.Id == vacancyDTO.Id);
+            if (vacancy == null || vacancy.CompanyId == id) 
                 return "Error";
 
             if (!string.IsNullOrEmpty(vacancyDTO.Title)) vacancy.Title = vacancyDTO.Title;
