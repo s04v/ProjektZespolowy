@@ -88,7 +88,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         Description = "bearer {token}",
         In = ParameterLocation.Header,
-        Name = "Autthorization",
+        Name = "Authorization",
         Type = SecuritySchemeType.ApiKey
     });
 

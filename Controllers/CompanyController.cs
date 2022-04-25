@@ -129,20 +129,20 @@ namespace FindJobWebApi.Controllers
         #region Get Profile
         [Authorize(Roles = "Company")]
         [HttpGet("profile")]
-        public async Task<ActionResult<CompanyDTO>> GetCompanyProfile([FromHeader] string authorization)
+        public async Task<ActionResult<CompanyDTO>> GetCompanyProfile()
         {
 
-            if(string.IsNullOrEmpty(authorization))
-            {
-                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
-            }
+            var currentCompany = User.Identity;
+            var currentId = Int32.MinValue;
 
-            var currentId = authorization.parseToken();
+            if (currentCompany == null || !Int32.TryParse(currentCompany.Name, out currentId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
+
             var company = _service.GetProfile(currentId);
+
             if(company == null)
-            {
                 return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
-            }
+
             return Ok(ResponseConvertor.GetResult("OK", company));
         }
         #endregion
