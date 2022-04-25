@@ -113,7 +113,7 @@ namespace FindJobWebApi.Controllers
         #region Get List of Vacancies
         [AllowAnonymous]
         [HttpGet("{id}/job")]
-        public async Task<ActionResult<CompanyDTO>> ListOfVacanciesOfCompany([FromRoute] int id)
+        public async Task<ActionResult<IEnumerable<VacancyDTO>>> ListOfVacanciesOfCompany([FromRoute] int id)
         {
             var company = _service.GetCompanyById(id);
 
@@ -121,8 +121,8 @@ namespace FindJobWebApi.Controllers
                 return BadRequest(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
 
             var vacancies = _service.GetVacanciesByCompany(id);
-            company.Vacancies = vacancies;
-            return Ok(ResponseConvertor.GetResult("OK", company));
+
+            return Ok(ResponseConvertor.GetResult("OK", vacancies));
         }
         #endregion
 
