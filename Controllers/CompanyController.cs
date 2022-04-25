@@ -150,17 +150,18 @@ namespace FindJobWebApi.Controllers
         #region Add Data About Profile
         [Authorize(Roles = "Company")]
         [HttpPost("profile")]
-        public async Task<ActionResult<string>> AddDataAboutCompany([FromHeader]string authorization, ModifyCompanyDTO dto)
+        public async Task<ActionResult<string>> AddDataAboutCompany(ModifyCompanyDTO dto)
         {
-            if (string.IsNullOrEmpty(authorization))
-            {
-                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
-            }
+            var currentCompany = User.Identity;
+            var currentId = Int32.MinValue;
 
-            var currentId = authorization.parseToken();
+            if (currentCompany == null || !Int32.TryParse(currentCompany.Name, out currentId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
 
             var result = _service.AddProfile(currentId, dto);
-            if(result.Equals("Error")) return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+
+            if(result.Equals("Error")) 
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
 
             return Ok(ResponseConvertor.GetResult("OK", result));
 
