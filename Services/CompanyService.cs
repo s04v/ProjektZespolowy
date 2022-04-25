@@ -24,7 +24,7 @@ namespace FindJobWebApi.Services
             if(!string.IsNullOrEmpty(dto.Desciption)) company.Desciption = dto.Desciption;
             if(!string.IsNullOrEmpty(dto.CompanyName)) company.CompanyName = dto.CompanyName;
 
-            if (CheckIfAddressExist(dto.CompanyAddressId)) company.CompanyAddressId = dto.CompanyAddressId;
+            if (IsAddressExist(dto.CompanyAddressId)) company.CompanyAddressId = dto.CompanyAddressId;
 
             if (!string.IsNullOrEmpty(dto.Website)) company.Website = dto.Website;
             if (!string.IsNullOrEmpty(dto.Password)) company.Password = dto.Password.getHash();
@@ -134,7 +134,7 @@ namespace FindJobWebApi.Services
             throw new NotImplementedException();
         }
 
-        private bool CheckIfAddressExist(int? addressId)
+        private bool IsAddressExist(int? addressId)
         {
             if (addressId == null || _context.Companies.SingleOrDefault(x => x.Id == addressId) == null)
                 return false;
