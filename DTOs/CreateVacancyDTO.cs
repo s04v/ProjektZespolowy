@@ -4,8 +4,6 @@ namespace FindJobWebApi.DTOs
 {
     public class CreateVacancyDTO
     {
-
-        public int CompanyId { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
@@ -16,7 +14,7 @@ namespace FindJobWebApi.DTOs
         public string Responsibilities { get; set; }
         [Required]
         public decimal Salary { get; set; }
-        public DateTime UpdateTime { get; set; }
+        //public DateTime UpdateTime { get; set; }
 
     }
 }

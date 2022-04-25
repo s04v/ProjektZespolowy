@@ -16,14 +16,13 @@ namespace FindJobWebApi.Services
             _mapper = mapper;
         }
 
-        public string AddNewVacancy(CreateVacancyDTO vacancyDTO)
+        public string AddNewVacancy(int companyId, CreateVacancyDTO vacancyDTO)
         {
-            vacancyDTO.UpdateTime = DateTime.SpecifyKind(DateTime.Now.Date + DateTime.Now.TimeOfDay, DateTimeKind.Utc);
-
-            if (_context.Companies.SingleOrDefault(x => x.Id == vacancyDTO.CompanyId) == null) return "Company doesn't exists";
-
             var currentVacancy = _mapper.Map<Vacancy>(vacancyDTO);
+            currentVacancy.CompanyId = companyId;
             currentVacancy.Id = _context.Vacancies.ToList().OrderBy(x => x.Id).Last().Id + 1;
+
+            currentVacancy.UpdateTime = DateTime.SpecifyKind(DateTime.Now.Date + DateTime.Now.TimeOfDay, DateTimeKind.Utc);
 
             _context.Vacancies.Add(currentVacancy);
             _context.SaveChanges();

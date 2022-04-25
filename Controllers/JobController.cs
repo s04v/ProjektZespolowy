@@ -23,6 +23,7 @@ namespace FindJobWebApi.Controllers
             _cookieService = cookieService;
         }
 
+        [Authorize(Roles = "Company")]
         [HttpPost("add")]
         public async Task<ActionResult<string>> AddNewJob([FromBody]CreateVacancyDTO vacancyDTO)
         {
@@ -35,7 +36,13 @@ namespace FindJobWebApi.Controllers
                 return BadRequest(ResponseConvertor.GetResult("error", errors));
             }
 
-            var result = _service.AddNewVacancy(vacancyDTO);
+            var currentCompany = User.Identity;
+            var currentCompanyId = Int32.MinValue;
+
+            if (currentCompany == null || !Int32.TryParse(currentCompany.Name, out currentCompanyId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
+
+            var result = _service.AddNewVacancy(currentCompanyId, vacancyDTO);
 
             if (!result.Equals("OK")) 
                 return Conflict(ResponseConvertor.GetResult("error", result));
