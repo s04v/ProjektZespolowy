@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace FindJobWebApi.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/user")]
     public class UserController : ControllerBase
     {
@@ -87,16 +86,15 @@ namespace FindJobWebApi.Controllers
 
         [Authorize(Roles="User")]
         [HttpGet("profile")]
-        public async Task<ActionResult<string>> GetUserProfile([FromHeader] string authorization)
+        public async Task<ActionResult<string>> GetUserProfile()
         {
-            //var currentUser = User.Identity;
+            var currentUser = User.Identity;
+            var currentId = Int32.MinValue;
 
-            if (string.IsNullOrEmpty(authorization))
-                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
+            if (currentUser == null || !Int32.TryParse(currentUser.Name, out currentId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
 
-            var userId = authorization.parseToken();
-
-            var user = _service.GetUser(userId);
+            var user = _service.GetUser(currentId);
 
             if(user == null)
                 return NotFound(ResponseConvertor.GetResult("error", "Problem occured by user ID"));
