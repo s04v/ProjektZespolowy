@@ -77,6 +77,7 @@ namespace FindJobWebApi.Controllers
         }
         #endregion
         #region Subscribe
+
         [HttpPost("{id}/subscribe")]
         public async Task<ActionResult<string>> SubscribeToNewVacancies([FromRoute] int id)
         {
@@ -85,6 +86,7 @@ namespace FindJobWebApi.Controllers
         }
         #endregion
         #region Get Company By ID
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<CompanyDTO>> GetCompanyById([FromRoute] int id)
         {
@@ -97,6 +99,7 @@ namespace FindJobWebApi.Controllers
         }
         #endregion
         #region Get Companies
+        [AllowAnonymous]
         [HttpGet("list")]
         public async Task<ActionResult<IEnumerable<CompanyDTO>>> GetAllCompanies()
         {
@@ -108,8 +111,9 @@ namespace FindJobWebApi.Controllers
         #endregion
 
         #region Get List of Vacancies
+        [AllowAnonymous]
         [HttpGet("{id}/job")]
-        public async Task<ActionResult<string>> ListOfVacanciesOfCompany([FromRoute] int id)
+        public async Task<ActionResult<CompanyDTO>> ListOfVacanciesOfCompany([FromRoute] int id)
         {
             var company = _service.GetCompanyById(id);
 
@@ -117,8 +121,8 @@ namespace FindJobWebApi.Controllers
                 return BadRequest(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
 
             var vacancies = _service.GetVacanciesByCompany(id);
-            
-            return Ok(ResponseConvertor.GetResult("OK", vacancies));
+            company.Vacancies = vacancies;
+            return Ok(ResponseConvertor.GetResult("OK", company));
         }
         #endregion
 
@@ -127,6 +131,7 @@ namespace FindJobWebApi.Controllers
         [HttpGet("profile")]
         public async Task<ActionResult<CompanyDTO>> GetCompanyProfile([FromHeader] string authorization)
         {
+
             if(string.IsNullOrEmpty(authorization))
             {
                 return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
@@ -143,10 +148,10 @@ namespace FindJobWebApi.Controllers
         #endregion
 
         #region Add Data About Profile
+        [Authorize(Roles = "Company")]
         [HttpPost("profile")]
         public async Task<ActionResult<string>> AddDataAboutCompany([FromHeader]string authorization, ModifyCompanyDTO dto)
         {
-            //var currentProfile = User.Identity?.Name;
             if (string.IsNullOrEmpty(authorization))
             {
                 return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));

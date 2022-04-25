@@ -84,6 +84,8 @@ namespace FindJobWebApi.Controllers
         {
             return "User List";
         }
+
+        [Authorize(Roles="User")]
         [HttpGet("profile")]
         public async Task<ActionResult<string>> GetUserProfile([FromHeader] string authorization)
         {
@@ -101,6 +103,8 @@ namespace FindJobWebApi.Controllers
 
             return Ok(ResponseConvertor.GetResult("OK", user));
         }
+
+
         [HttpPost("profile")]
         public async Task<ActionResult<string>> AddUserData([FromHeader] string authorization, ModifyUserDTO dto)
         {

@@ -23,16 +23,13 @@ builder.Services.Configure<JWTSettings>(jwtSection);
 var appSettings = jwtSection.Get<JWTSettings>();
 var key = Encoding.ASCII.GetBytes(appSettings.SecretKey);
 
-//builder.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme);
-//builder.Services.AddAuthentication(options =>
-
-
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddCookie("Cookie", config =>
 {
     config.LoginPath = "/company/signin";
     config.AccessDeniedPath = "/company/signin"; // temporary
+    
 })
     .AddJwtBearer(options =>
     {

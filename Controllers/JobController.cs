@@ -2,6 +2,7 @@
 using FindJobWebApi.JWTLogic;
 using FindJobWebApi.Response;
 using FindJobWebApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobWebApi.Controllers
@@ -42,16 +43,16 @@ namespace FindJobWebApi.Controllers
             return Ok(ResponseConvertor.GetResult("OK", result));
         }
 
+        [Authorize(Roles = "Company")]
         [HttpPost("modify")]
-        public async Task<ActionResult<string>> ModifyJob([FromBody] CreateVacancyDTO vacancyDTO)
+        public async Task<ActionResult<string>> ModifyJob([FromHeader] string authorization, [FromBody] CreateVacancyDTO vacancyDTO)
         {
-            var currentProfile = User.Identity?.Name;
-            if (string.IsNullOrEmpty(currentProfile?.ToString()))
+            if (string.IsNullOrEmpty(authorization))
             {
                 return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
             }
 
-            var currentId = currentProfile.ToString().parseToken();
+            var currentId = authorization.parseToken();
 
             var result = _service.ModifyVacancy(currentId, vacancyDTO);
             if (result.Equals("Error")) 
