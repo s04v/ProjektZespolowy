@@ -70,6 +70,26 @@ namespace FindJobWebApi.Controllers
             return Ok(ResponseConvertor.GetResult("OK", result));
         }
 
+        [Authorize(Roles = "Company")]
+        [HttpDelete("delete")]
+        public async Task<ActionResult<string>> DeleteVacancy([FromBody] int vacancyId)
+        {
+            var currentCompany = User.Identity;
+            var currentCompanyId = Int32.MinValue;
+
+            if (currentCompany == null || !Int32.TryParse(currentCompany.Name, out currentCompanyId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
+
+            var result = _service.DeleteVacancy(currentCompanyId, vacancyId);
+
+            if (result.Equals("Error"))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+            else if (result.Equals("Not yours"))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by vacancy owner"));
+
+            return Ok(ResponseConvertor.GetResult("OK", result));
+        }
+
         #region InProgress
         [HttpGet("{id}")]
         public async Task<ActionResult<string>> GetJobById([FromRoute] int id)

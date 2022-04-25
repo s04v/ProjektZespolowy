@@ -7,5 +7,7 @@ namespace FindJobWebApi.Services
         public string AddNewVacancy(int companyId, CreateVacancyDTO vacancyDTO);
 
         public string ModifyVacancy(int id, ModifyVacancyDTO vacancyDTO);
+
+        public string DeleteVacancy(int companyId, int vacancyId);
     }
 }

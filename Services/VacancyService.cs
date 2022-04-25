@@ -51,5 +51,20 @@ namespace FindJobWebApi.Services
 
             return "OK";
         }
+
+        public string DeleteVacancy(int companyId, int vacancyId) 
+        {
+            var vacancy = _context.Vacancies.SingleOrDefault(x => x.Id == vacancyId);
+            if (vacancy == null)
+                return "Error";
+
+            if (vacancy.CompanyId != companyId)
+                return "Not yours";
+
+            _context.Vacancies.Remove(vacancy);
+            _context.SaveChanges();
+
+            return "OK";
+        }
     }
 }
