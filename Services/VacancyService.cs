@@ -30,19 +30,24 @@ namespace FindJobWebApi.Services
             return "OK";
         }
 
-        public string ModifyVacancy(int id, ModifyVacancyDTO vacancyDTO)
+        public string ModifyVacancy(int companyId, ModifyVacancyDTO vacancyDTO)
         {
             var vacancy = _context.Vacancies.SingleOrDefault(x => x.Id == vacancyDTO.Id);
-            if (vacancy == null || vacancy.CompanyId == id) 
+            if (vacancy == null) 
                 return "Error";
+
+            if (vacancy.CompanyId != companyId)
+                return "Not yours";
 
             if (!string.IsNullOrEmpty(vacancyDTO.Title)) vacancy.Title = vacancyDTO.Title;
             if (!string.IsNullOrEmpty(vacancyDTO.Description)) vacancy.Description = vacancyDTO.Description;
             if (!string.IsNullOrEmpty(vacancyDTO.Requirements)) vacancy.Requirements = vacancyDTO.Requirements;
             if (!string.IsNullOrEmpty(vacancyDTO.Responsibilities)) vacancy.Responsibilities = vacancyDTO.Responsibilities;
-            if (!string.IsNullOrEmpty(vacancyDTO.Salary.ToString())) vacancy.Salary = vacancyDTO.Salary;
+            if (vacancyDTO.Salary != null) vacancy.Salary = (decimal)vacancyDTO.Salary;
 
             vacancy.UpdateTime = DateTime.SpecifyKind(DateTime.Now.Date.AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second), DateTimeKind.Utc);
+
+            _context.SaveChanges();
 
             return "OK";
         }

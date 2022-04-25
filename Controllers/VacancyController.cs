@@ -52,18 +52,20 @@ namespace FindJobWebApi.Controllers
 
         [Authorize(Roles = "Company")]
         [HttpPost("modify")]
-        public async Task<ActionResult<string>> ModifyVacancy([FromHeader] string authorization, [FromBody] ModifyVacancyDTO vacancyDTO)
+        public async Task<ActionResult<string>> ModifyVacancy([FromBody] ModifyVacancyDTO vacancyDTO)
         {
-            if (string.IsNullOrEmpty(authorization))
-            {
-                return NotFound(ResponseConvertor.GetResult("error", "Token is empty"));
-            }
+            var currentCompany = User.Identity;
+            var currentCompanyId = Int32.MinValue;
 
-            var companyId = authorization.parseToken();
+            if (currentCompany == null || !Int32.TryParse(currentCompany.Name, out currentCompanyId))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by token"));
 
-            var result = _service.ModifyVacancy(companyId, vacancyDTO);//_service.ModifyVacancy(companyId, vacancyDTO);
+            var result = _service.ModifyVacancy(currentCompanyId, vacancyDTO);
+
             if (result.Equals("Error")) 
                 return NotFound(ResponseConvertor.GetResult("error", "Problem occured by company ID"));
+            else if (result.Equals("Not yours"))
+                return NotFound(ResponseConvertor.GetResult("error", "Problem occured by vacancy owner"));
 
             return Ok(ResponseConvertor.GetResult("OK", result));
         }
