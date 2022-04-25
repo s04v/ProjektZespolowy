@@ -9,14 +9,14 @@ namespace FindJobWebApi.Controllers
 {
     [ApiController]
     [Route("api/job")]
-    public class JobController : ControllerBase
+    public class VacancyController : ControllerBase
     {
         private readonly IVacancyService _service;
         private readonly ITokenService _tokenService;
 
         private readonly ICookieService _cookieService;
 
-        public JobController(IVacancyService service, ITokenService tokenService, ICookieService cookieService)
+        public VacancyController(IVacancyService service, ITokenService tokenService, ICookieService cookieService)
         {
             _service = service;
             _tokenService = tokenService;
@@ -25,7 +25,7 @@ namespace FindJobWebApi.Controllers
 
         [Authorize(Roles = "Company")]
         [HttpPost("add")]
-        public async Task<ActionResult<string>> AddNewJob([FromBody]CreateVacancyDTO vacancyDTO)
+        public async Task<ActionResult<string>> AddNewVacancy([FromBody]CreateVacancyDTO vacancyDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -52,7 +52,7 @@ namespace FindJobWebApi.Controllers
 
         [Authorize(Roles = "Company")]
         [HttpPost("modify")]
-        public async Task<ActionResult<string>> ModifyJob([FromHeader] string authorization, [FromBody] ModifyVacancyDTO vacancyDTO)
+        public async Task<ActionResult<string>> ModifyVacancy([FromHeader] string authorization, [FromBody] ModifyVacancyDTO vacancyDTO)
         {
             if (string.IsNullOrEmpty(authorization))
             {

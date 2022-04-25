@@ -42,7 +42,7 @@ namespace FindJobWebApi.Services
             if (!string.IsNullOrEmpty(vacancyDTO.Responsibilities)) vacancy.Responsibilities = vacancyDTO.Responsibilities;
             if (!string.IsNullOrEmpty(vacancyDTO.Salary.ToString())) vacancy.Salary = vacancyDTO.Salary;
 
-            vacancy.UpdateTime = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+            vacancy.UpdateTime = DateTime.SpecifyKind(DateTime.Now.Date.AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second), DateTimeKind.Utc);
 
             return "OK";
         }
