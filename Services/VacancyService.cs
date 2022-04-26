@@ -20,7 +20,21 @@ namespace FindJobWebApi.Services
         {
             var currentVacancy = _mapper.Map<Vacancy>(vacancyDTO);
             currentVacancy.CompanyId = companyId;
-            currentVacancy.Id = _context.Vacancies.ToList().OrderBy(x => x.Id).Last().Id + 1;
+
+            List<Vacancy> vacancies = new List<Vacancy>();
+
+                
+ 
+
+            int id = 0;
+
+            if (_context.Vacancies.Count() != 0)
+            {
+                vacancies = _context.Vacancies.ToList();
+                id = vacancies.OrderBy(x => x.Id).Last().Id;
+            }      
+
+            currentVacancy.Id = (int)(id + 1);
 
             currentVacancy.UpdateTime = DateTime.SpecifyKind(DateTime.Now.Date.AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second), DateTimeKind.Utc);
 
