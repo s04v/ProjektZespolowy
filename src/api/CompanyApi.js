@@ -15,10 +15,15 @@ const newOffer = async (data) => {
 const getProfile = async () => {
     return await Api.get('/api/company/profile');
 }
+
+const getProfileData = async () => {
+    return await Api.get('/api/company/3/job');
+}
 const helper = {
     registerAccount: registerAccount,
     login: login,
-    getProfile: getProfile
+    getProfile: getProfile,
+    getProfileData: getProfileData
 }
 
 export {

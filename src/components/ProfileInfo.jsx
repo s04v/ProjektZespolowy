@@ -23,15 +23,17 @@ const ProfileInfo = (props) => {
 
     ]
 
+    const [fieldValues, setFieldValues] = useState({});
     const [Fields, setFields] = useState([]);
     const [data, setData] = useState({});
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        const testData = CompanyApi.getProfile()
+        const testData = CompanyApi.getProfile();
+        const getTest = CompanyApi.getProfileData();
 
-        testData.then(data => {
-            console.log(data)
+        getTest.then(data => {
+            console.log(data);
         })
 
         setFields(
@@ -40,6 +42,24 @@ const ProfileInfo = (props) => {
                 : 
                 employeeFields
         );
+
+
+        testData.then(data => {
+            console.log(data);
+            const info = data.data.data;
+
+            if(props.role == 'Company')
+            {
+                setFieldValues({
+                    ...fieldValues,
+                    "email": info.email,
+                    "password": info.password,
+                    "name": info.companyName,
+                    "location": info.companyAddress,
+                });
+            }
+
+        })
         //console.log(props.role);
     },[]);
 

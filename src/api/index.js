@@ -3,8 +3,9 @@ import Cookies from "universal-cookie";
 
 
 const Api = axios.create({
+    //baseURL: 'https://localhost:7253',
     baseURL: 'https://pz-api-findjob.herokuapp.com/',
-    timeout: 1000,
+    timeout: 5000,
     withCredentials: true,
 });
 

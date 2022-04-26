@@ -22,7 +22,7 @@ const OfferChanger = () => {
           */
     }
 
-    const opened = !offerFields ? style.opened : "";
+    const opened = offerFields ? style.opened : "";
 
     const fields = [
         { id: '1', name: 'who', title: 'Who', type: 'text' },
@@ -36,16 +36,13 @@ const OfferChanger = () => {
                 <h2>Job offers</h2>
                 <AiOutlinePlus size={50} onClick={() => setOfferFields(!offerFields)}/>
             </div>
-            <div className={offerFields ? style.hidden : ""}>
+            <div className={!offerFields ? style.hidden : ""}>
                 <SignForm
                     fields={fields}
                     onSend={onSend}
                     buttonTitle='Save' />
             </div>
-            <OfferRow />
-            <OfferRow />
-            <OfferRow />
-            <OfferRow />
+            <OfferRow key={1} />
         </div>
     )
 }

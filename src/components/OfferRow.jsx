@@ -4,7 +4,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri'
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from 'react-icons/md'
 import style from '../styles/components/offerRow.module.scss'
 
-const OfferRow = (props) => {
+const OfferRow = ({key}) => {
     const [expanded, setExpanded] = useState(false);
     const isHide = (!expanded) ? style.hidden : style.showed;
 
@@ -22,19 +22,19 @@ const OfferRow = (props) => {
             <div className={style.info}>
                 <div>
                     <p>Who:</p>
-                    <input type="text" name="who" id="who" />
+                    <input type="text" name={`who${key}`} id={`who${key}`} />
                 </div>
                 <div>
                     <p>Salary:</p>
-                    <input type="text" name="salary" id="salary" />
+                    <input type="text" name={`salary${key}`} id={`salary${key}`} />
                 </div>
                 <div>
                     <p>Experience:</p>
-                    <input type="text" name="experience" id="experience" />
+                    <input type="text" name={`experience${key}`} id={`experience${key}`} />
                 </div>
                 <div className={isHide}>
                     <p>Description:</p>
-                    <input type="text" name="desc" id="desc" />
+                    <input type="text" name={`desc${key}`} id={`desc${key}`} />
                 </div>
             </div>
             {buttonArrow()}
