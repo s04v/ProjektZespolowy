@@ -16,8 +16,8 @@ const getProfile = async () => {
     return await Api.get('/api/company/profile');
 }
 
-const getProfileData = async () => {
-    return await Api.get('/api/company/3/job');
+const getProfileData = async (id) => {
+    return await Api.get(`/api/company/${id}/job`);
 }
 const helper = {
     registerAccount: registerAccount,

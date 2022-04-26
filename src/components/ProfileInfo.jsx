@@ -30,11 +30,6 @@ const ProfileInfo = (props) => {
 
     useEffect(() => {
         const testData = CompanyApi.getProfile();
-        const getTest = CompanyApi.getProfileData();
-
-        getTest.then(data => {
-            console.log(data);
-        })
 
         setFields(
             (props.role == 'Company')? 
@@ -47,6 +42,13 @@ const ProfileInfo = (props) => {
         testData.then(data => {
             console.log(data);
             const info = data.data.data;
+
+            const getTest = CompanyApi.getProfileData(info.id);
+
+            getTest.then(data => {
+                console.log(data);
+            })
+
 
             if(props.role == 'Company')
             {
