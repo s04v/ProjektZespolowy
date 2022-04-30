@@ -28,13 +28,13 @@ const OfferRow = ({key}) => {
                     <p>Salary:</p>
                     <input type="text" name={`salary${key}`} id={`salary${key}`} />
                 </div>
-                <div>
-                    <p>Experience:</p>
-                    <input type="text" name={`experience${key}`} id={`experience${key}`} />
-                </div>
                 <div className={isHide}>
+                    <p>Requirements:</p>
+                    <textarea type="text" style={{width:'100%'}} name={`experience${key}`} id={`experience${key}`} />
                     <p>Description:</p>
-                    <input type="text" name={`desc${key}`} id={`desc${key}`} />
+                    <textarea type="text" style={{width:'100%'}} name={`desc${key}`} id={`desc${key}`} />
+                    <p>Responsobilites:</p>
+                    <textarea type="text" style={{width:'100%'}} name={`respons${key}`} id={`respons${key}`} />
                 </div>
             </div>
             {buttonArrow()}

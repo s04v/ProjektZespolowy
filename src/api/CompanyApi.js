@@ -9,7 +9,7 @@ const login = async (data) => {
 }
 
 const newOffer = async (data) => {
-    return await Api.post('/api/company/{id}/job', data);
+    return await Api.post('/api/job/add', data);
 }
 
 const getProfile = async () => {
@@ -23,7 +23,8 @@ const helper = {
     registerAccount: registerAccount,
     login: login,
     getProfile: getProfile,
-    getProfileData: getProfileData
+    getProfileData: getProfileData,
+    newOffer: newOffer,
 }
 
 export {

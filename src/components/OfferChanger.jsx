@@ -11,7 +11,6 @@ const OfferChanger = () => {
 
     const onSend = (data) => {
         console.log(data);
-        /*
         CompanyApi.newOffer(data)
           .then((result) => {
             console.log(result);
@@ -19,16 +18,16 @@ const OfferChanger = () => {
           })
           .catch((error) => {
           });
-          */
     }
 
     const opened = offerFields ? style.opened : "";
 
     const fields = [
-        { id: '1', name: 'who', title: 'Who', type: 'text' },
-        { id: '2', name: 'experience', title: 'Experience', type: 'text' },
-        { id: '3', name: 'salary', title: 'Salary', type: 'text' },
-        { id: '4', name: 'desc', title: 'Decription', type: 'text' },
+        { id: '1', name: 'Title', title: 'Title', type: 'text' },
+        { id: '2', name: 'Description', title: 'Decription', type: 'text' },
+        { id: '3', name: 'Requirements', title: 'Requirements', type: 'text' },
+        { id: '4', name: 'Responsibilities', title: 'Responsibilities', type: 'text' },
+        { id: '5', name: 'Salary', title: 'Salary', type: 'text' },
     ]
     return (
         <div className={style.offerChanger} >
