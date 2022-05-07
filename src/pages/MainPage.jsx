@@ -9,6 +9,7 @@ import Background from '../components/Background';
 import {switchTab} from "../actions/MainActions";
 import {connect} from "react-redux";
 import style from '../styles/pages/mainPage.scss'
+import {Link} from "react-router-dom";
 
 const MainPage = (props) => {
 
@@ -21,7 +22,7 @@ const MainPage = (props) => {
             <img src="https://thispersondoesnotexist.com/image" alt="A human being" />
             <div>
               <h1>findjob works for you.</h1>
-              {!props.tab ? <Button fontsize='24px' text='Create CV' /> : <input placeholder='Search' />}
+              {!props.tab ? <Link to='/creatorcv'><Button fontsize='24px' text='Create CV' /> </Link>: <input placeholder='Search' />}
             </div>
         </section>
         <section className='second-section'>
